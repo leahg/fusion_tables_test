@@ -1,0 +1,293 @@
+/*html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+/*
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+*/
+
+
+
+/* line 1, ../sass/teststyle.scss */
+.hide {
+  display: none;
+}
+
+/* line 2, ../sass/teststyle.scss */
+.accessiblyHide {
+  position: absolute;
+  left: -9999px;
+}
+
+/* line 25, ../sass/teststyle.scss */
+#container {
+  width: 733px;
+  height: 420px;
+  background: white;
+  border-color: black;
+  position: relative;
+  padding: 20px 0 0 20px;
+  margin: 0;
+  border: 1px;
+  font-family: sans-serif;
+}
+
+/* line 34, ../sass/teststyle.scss */
+div.map-container {
+  /* For modern browsers */
+  /* For IE 6/7 (trigger hasLayout) */
+}
+/* line 9, ../sass/teststyle.scss */
+div.map-container:before, div.map-container:after {
+  content: "";
+  display: table;
+}
+/* line 14, ../sass/teststyle.scss */
+div.map-container:after {
+  clear: both;
+}
+/* line 19, ../sass/teststyle.scss */
+div.map-container {
+  zoom: 1;
+}
+
+/* line 38, ../sass/teststyle.scss */
+#map_canvas {
+  width: 733px;
+  height: 420px;
+  float: left;
+  margin: 0;
+  position: absolute;
+}
+
+/* line 45, ../sass/teststyle.scss */
+.googft-info-window {
+  color: gray;
+  font-size: 11px;
+  border: 1px #ffdd00;
+  max-width: 213px;
+  padding-right: 0;
+  margin-right:0;
+}
+
+
+
+.FT_infowindow {
+  transform: scale (.8);
+  font-size: 11px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  color: gray;
+  max-width: 213px;
+
+}
+
+.FT_infowindow strong{
+  color: #22205F;
+}
+
+br {
+  font-size: 13px;
+}
+
+/* line 50, ../sass/teststyle.scss */
+#sidebar {
+  color: #4D4D4D;
+  text-decoration: white;
+  width: 190px;
+  height: 420px;
+  font-size: 11px;
+  background: #B1B0B4;
+  position: absolute;
+  margin-left: 537px;
+    border-left-style: 3px;
+  border-left-color: yellow;
+  clear: both;
+  opacity: .9;
+  overflow: auto;
+
+}
+
+#sidebar td a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+
+ }
+
+#sidebar td a:active {
+color: #22205F;
+text-decoration: underline;
+text-decoration-color: white;
+
+}
+
+#sidebar td a:focus {
+color: #22205F;
+background-color: blue;
+}
+
+ #sidebar td a:hover {
+   text-decoration: none; 
+   color: #22205F;
+ }
+
+#content {
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-top: 30px;
+  padding-left: 10px;
+  position: relative;
+  height: 400px;
+  width: 213px;
+
+}
+
+#sidebartable {
+  width: 170px;
+  padding-left: 5px;
+}
+
+hr {
+  border: 1px;
+  height: 1px;
+  background-color: #4D4D4D;
+  opacity: .4;
+}
+
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+padding-right: 10px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment  {
+height: 5px;
+display: block;
+background-color: transparent;
+padding-right: 10px;
+
+}
+
+::-webkit-scrollbar-track-piece  {
+background-color: transparent;
+border: 4px solid #B1B0B4;
+-webkit-border-radius: 4px;
+padding-right: 10px;
+
+}
+
+::-webkit-scrollbar-thumb:vertical {
+height: 5px;
+width: 5px;
+background-color: #4D4D4D;
+-webkit-border-radius: 4px;
+padding-right: 10px;
+
+}
+
+#sidebar th {
+  display: none;
+}
+
+#sidebar h2 {
+   padding-left: 5px;
+   font-size: 13px;
+   color: white;
+   position: absolute;
+}
+
+#sidebartable {
+  
+}
+
+
+
+li {
+  display: inline;
+}
+
+
+input[type=checkbox] {
+    display:none;
+  }
+
+  input[type=checkbox] + label
+   {
+       color: gray;
+       background: url(imgoffsilver.png);
+       height: 30px;
+       width: 173px;
+       display:inline-block;
+       font-size: 13px;
+   }
+   
+   input[type=checkbox]:checked + label
+    {
+       background: url(imgongold.png);
+        height: 30px;
+        width: 173px;
+        display:inline-block;
+        color: white;
+        font-size: 13px;
+    }
+
+ul {
+  padding-left: 5px;
+  padding-top: 0;
+  margin: 0;
+  position: absolute;
+  top: 385px;
+}
+
+li label {
+  text-align: center;
+}
+
+span {
+margin-top: -15px;
+height: 20px;
+display: block;
+top: 100%;
+position: relative;
+margin-top: -23px;
+}

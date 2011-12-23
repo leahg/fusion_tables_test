@@ -1,0 +1,266 @@
+/*html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+/*
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+*/
+
+
+
+/* line 1, ../sass/teststyle.scss */
+.hide {
+  display: none;
+}
+
+/* line 2, ../sass/teststyle.scss */
+.accessiblyHide {
+  position: absolute;
+  left: -9999px;
+}
+
+/* line 25, ../sass/teststyle.scss */
+#container {
+  width: 733px;
+  height: 420px;
+  background: white;
+  border-color: black;
+  position: relative;
+  padding: 20px 0 0 20px;
+  margin: 0;
+  border: 1px;
+  font-family: sans-serif;
+}
+
+/* line 34, ../sass/teststyle.scss */
+div.map-container {
+  /* For modern browsers */
+  /* For IE 6/7 (trigger hasLayout) */
+}
+/* line 9, ../sass/teststyle.scss */
+div.map-container:before, div.map-container:after {
+  content: "";
+  display: table;
+}
+/* line 14, ../sass/teststyle.scss */
+div.map-container:after {
+  clear: both;
+}
+/* line 19, ../sass/teststyle.scss */
+div.map-container {
+  zoom: 1;
+}
+
+/* line 38, ../sass/teststyle.scss */
+#map_canvas {
+  width: 733px;
+  height: 420px;
+  float: left;
+  margin: 0;
+  position: absolute;
+}
+
+/* line 45, ../sass/teststyle.scss */
+.googft-info-window {
+  color: gray;
+  font-size: 11px;
+}
+
+.googft-info-window  p{
+  color: black;
+}
+
+.FT_infowindow {
+  font-size: 11px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  color: gray;
+}
+
+.FT_infowindow strong{
+  color: black;
+}
+
+br {
+  font-size: 13px;
+}
+
+/* line 50, ../sass/teststyle.scss */
+#sidebar {
+  color: black;
+  text-decoration: white;
+  width: 190px;
+  height: 420px;
+  font-size: 11px;
+  background: #B1B0B4;
+  position: absolute;
+  margin-left: 537px;
+    border-left-style: 3px;
+  border-left-color: yellow;
+  clear: both;
+  opacity: .9;
+  overflow: auto;
+
+}
+
+#sidebar td a {
+  color: white;
+ }
+
+#content {
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-top: 30px;
+  padding-left: 10px;
+  position: relative;
+  height: 400px;
+}
+
+#sidebar th {
+  display: none;
+}
+
+#sidebar h2 {
+   padding-left: 5px;
+   font-size: 13px;
+   color: white;
+   position: absolute;
+}
+
+#sidebartable {
+  
+}
+
+#verline {
+  background: white;
+  width: 1px;
+  height: 375px;
+  float: left;
+  margin-left: 6px;
+  margin-top: 35px;
+  position: absolute;
+
+}
+
+li {
+  display: inline;
+}
+
+
+input[type=checkbox] {
+    display:none;
+  }
+
+  input[type=checkbox] + label
+   {
+       color: gray;
+       background: url(img/imgoffsilver.png);
+       height: 30px;
+       width: 173px;
+       display:inline-block;
+       font-size: 13px;
+   }
+   
+   input[type=checkbox]:checked + label
+    {
+       background: url(img/imgongold.png);
+        height: 30px;
+        width: 173px;
+        display:inline-block;
+        color: white;
+        font-size: 13px;
+    }
+
+ul {
+  padding-left: 5px;
+  padding-top: 0;
+  margin: 0;
+  position: absolute;
+  top: 385px;
+}
+
+li label {
+  text-align: center;
+}
+
+span {
+margin-top: -15px;
+height: 20px;
+display: block;
+top: 100%;
+position: relative;
+margin-top: -23px;
+}
+
+
+
+/*
+#scroller {
+position:absolute;
+border:1px solid black;
+width:15px;
+writing-mode:tb-rl;
+font-weight:bold;
+font-family:arial
+}
+#outerscroller {
+height:100px;
+width:25px;
+top:15px;
+left:209px;
+border:1px solid gray;
+position:absolute;
+overflow:hidden
+}
+</style>
+<script type="text/javascript">
+function scroll() {
+var offset = event.clientY - scroller.offsetTop
+document.onmousemove=function() {
+content.scrollTop=event.clientY-15-offset
+scroller.style.top=event.clientY-offset
+}
+document.onmouseup=function() {
+document.onmousemove=null
+}
+}
+
+*/
