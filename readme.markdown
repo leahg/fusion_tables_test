@@ -21,4 +21,5 @@
 
 1. designing scrollbars
 2. layout for filters
+3. merge js files and style
 
