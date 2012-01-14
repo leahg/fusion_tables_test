@@ -10,7 +10,7 @@ gettext = lambda s: s
 
 PROJECT_DIR = os.path.dirname(__file__)
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 LOCAL_DEVELOPMENT = True
 
@@ -122,7 +122,7 @@ if USE_I18N:
 CMS_TEMPLATES = (
     ('test.html', 'Test Template'),
 )
-
+'''
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
@@ -130,7 +130,7 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
-
+'''
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (

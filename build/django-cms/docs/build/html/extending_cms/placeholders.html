@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Placeholders outside the CMS &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="6. Search and the django CMS" href="searchdocs.html" />
+    <link rel="prev" title="4. API References" href="api_references.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="searchdocs.html" title="6. Search and the django CMS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_references.html" title="4. API References"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="placeholders-outside-the-cms">
+<h1>5. Placeholders outside the CMS<a class="headerlink" href="#placeholders-outside-the-cms" title="Permalink to this headline">¶</a></h1>
+<p>Placeholders are special model fields that django CMS uses to render
+user-editable content (plugins) in templates. That is, it&#8217;s the place where a
+user can add text, video or any other plugin to a webpage, using either the
+normal Django admin interface or the so called <cite>frontend editing</cite>.</p>
+<p>Placeholders can be viewed as containers for <tt class="xref py py-class docutils literal"><span class="pre">CMSPlugin</span></tt> instances, and
+can be used outside the CMS in custom applications using the
+<tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt>.</p>
+<p>By defining one (or several) <tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt> on a custom model you can take
+advantage of the full power of <tt class="xref py py-class docutils literal"><span class="pre">CMSPlugin</span></tt>, including frontend editing.</p>
+<div class="section" id="quickstart">
+<h2>5.1. Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<p>You need to define a <tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt> on the model you would like to
+use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">cms.models.fields</span> <span class="kn">import</span> <span class="n">PlaceholderField</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c"># your fields</span>
+    <span class="n">my_placeholder</span> <span class="o">=</span> <span class="n">PlaceholderField</span><span class="p">(</span><span class="s">&#39;placeholder_name&#39;</span><span class="p">)</span>
+    <span class="c"># your methods</span>
+</pre></div>
+</div>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt> takes a string as first
+argument which will be used to configure which plugins can be used in this
+placeholder. The configuration is the same as for placeholders in the CMS.</p>
+<p>If you install this model in the admin application, you have to use
+<tt class="xref py py-class docutils literal"><span class="pre">PlaceholderAdmin</span></tt> instead of
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/contrib/admin/index.html#django.contrib.admin.ModelAdmin" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">ModelAdmin</span></tt></a> so the interface renders
+correctly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">cms.admin.placeholderadmin</span> <span class="kn">import</span> <span class="n">PlaceholderAdmin</span>
+<span class="kn">from</span> <span class="nn">myapp</span> <span class="kn">import</span> <span class="n">MyModel</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">MyModel</span><span class="p">,</span> <span class="n">PlaceholderAdmin</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now to render the placeholder in a template you use the
+<tt class="xref std std-ttag docutils literal"><span class="pre">render_placeholder</span></tt> tag from the
+<tt class="xref py py-mod docutils literal"><span class="pre">placeholder_tags</span></tt> template tag library:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">placeholder_tags</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">render_placeholder</span> <span class="nv">mymodel_instance.my_placeholder</span> <span class="s2">&quot;640&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>The <tt class="xref std std-ttag docutils literal"><span class="pre">render_placeholder</span></tt> tag takes a
+<tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt> instance as first argument and
+optionally accepts a width parameter as second argument for context sensitive
+plugins.</p>
+</div>
+<div class="section" id="adding-content-to-a-placeholder">
+<h2>5.2. Adding content to a placeholder<a class="headerlink" href="#adding-content-to-a-placeholder" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to add or edit content to a placeholder, the front-end admin
+view and the back-end view.</p>
+<div class="section" id="using-the-front-end-editor">
+<h3>5.2.1. Using the front-end editor<a class="headerlink" href="#using-the-front-end-editor" title="Permalink to this headline">¶</a></h3>
+<p>Probably the most simple way to add content to a placeholder, simply visit the
+page displaying your model (where you put the <tt class="xref std std-ttag docutils literal"><span class="pre">render_placeholder</span></tt> tag),
+then append <tt class="docutils literal"><span class="pre">?edit</span></tt> to the page&#8217;s URL. This will make a top banner appear,
+and after switching the &#8220;Edit mode&#8221; button to &#8220;on&#8221;, the banner will prompt you
+for your username and password (the user should be allowed to edit the page,
+obviously).</p>
+<p>You are now using the so-called <em>front-end edit mode</em>:</p>
+<p><img alt="edit-banner" src="../_images/edit-banner4.png" /></p>
+<p>Once in Front-end editing mode, your placeholders should display a menu,
+allowing you to add plugins to them: the following screen shot shows a
+default selection of plugins in an empty placeholder.</p>
+<p><img alt="frontend-placeholder-add-plugin" src="../_images/frontend-placeholder-add-plugin4.png" /></p>
+<p>Plugins are rendered at once, so you can have an idea what it will look like
+<cite>in fine</cite>, but to view the final look of a plugin simply leave edit mode by
+clicking the &#8220;Edit mode&#8221; button in the banner again.</p>
+</div>
+</div>
+<div class="section" id="fieldsets">
+<h2>5.3. Fieldsets<a class="headerlink" href="#fieldsets" title="Permalink to this headline">¶</a></h2>
+<p>There are some hard restrictions if you want to add custom fieldsets to an
+admin page with at least one <tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt>:</p>
+<ol class="arabic simple">
+<li>Every <tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt> <strong>must</strong> be in it&#8217;s own
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/contrib/admin/index.html#django.contrib.admin.ModelAdmin.fieldsets" title="(in Django v1.3)"><tt class="xref py py-attr docutils literal"><span class="pre">fieldset</span></tt></a>, one
+<tt class="xref py py-class docutils literal"><span class="pre">PlaceholderField</span></tt> per fieldset.</li>
+<li>You <strong>must</strong> include the following two classes: <tt class="docutils literal"><span class="pre">'plugin-holder'</span></tt> and
+<tt class="docutils literal"><span class="pre">'plugin-holder-nopage'</span></tt></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">5. Placeholders outside the CMS</a><ul>
+<li><a class="reference internal" href="#quickstart">5.1. Quickstart</a></li>
+<li><a class="reference internal" href="#adding-content-to-a-placeholder">5.2. Adding content to a placeholder</a><ul>
+<li><a class="reference internal" href="#using-the-front-end-editor">5.2.1. Using the front-end editor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fieldsets">5.3. Fieldsets</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="api_references.html"
+                                  title="previous chapter">4. API References</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="searchdocs.html"
+                                  title="next chapter">6. Search and the django CMS</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/extending_cms/placeholders.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="searchdocs.html" title="6. Search and the django CMS"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_references.html" title="4. API References"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

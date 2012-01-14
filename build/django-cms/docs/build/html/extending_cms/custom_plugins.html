@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Custom Plugins &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="3. App Integration" href="app_integration.html" />
+    <link rel="prev" title="1. Extending the CMS: Examples" href="extending_examples.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="app_integration.html" title="3. App Integration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="extending_examples.html" title="1. Extending the CMS: Examples"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="custom-plugins">
+<h1>2. Custom Plugins<a class="headerlink" href="#custom-plugins" title="Permalink to this headline">¶</a></h1>
+<p>CMS Plugins are reusable content publishers, that can be inserted into django
+CMS pages (or indeed into any content that uses django CMS placeholders) in
+order to publish information automatically, without further intervention.</p>
+<p>This means that your published web content, whatever it is, can be kept
+instantly up-to-date at all times.</p>
+<p>It&#8217;s like magic, but quicker.</p>
+<p>Unless you&#8217;re lucky enough to discover that your needs can be met by the
+built-in plugins, or by the many available 3rd-party plugins, you&#8217;ll have
+to write your own custom CMS Plugin.</p>
+<p>Don&#8217;t worry though, since writing a CMS Plugin is rather simple.</p>
+<div class="section" id="why-would-you-need-to-write-a-plugin">
+<h2>2.1. Why would you need to write a plugin?<a class="headerlink" href="#why-would-you-need-to-write-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>A plugin is the most convenient way to integrate content from another Django
+app into a django CMS page.</p>
+<p>For example, suppose you&#8217;re developing a site for a record company in django
+CMS. You might like to have on your site&#8217;s home page a &#8220;Latest releases&#8221; box.</p>
+<p>Of course, you could every so often edit that page and update the information.
+However, a sensible record company will manage its catalogue in Django too,
+which means Django already knows what this week&#8217;s new releases are.</p>
+<p>This is an excellent opportunity to make use of that information to make your
+life easier - all you need to do is create a django CMS plugin that you can
+insert into your home page, and leave it to do the work of publishing information
+about the latest releases for you.</p>
+<p>Plugins are <strong>reusable</strong>. Perhaps your record company is producing a series of
+reissues of seminal Swiss punk records; on your site&#8217;s page about the series,
+you could insert the same plugin, configured a little differently, that will
+publish information about recent new releases in that series.</p>
+</div>
+<div class="section" id="overview">
+<h2>2.2. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A django CMS plugin is fundamentally composed of three things.</p>
+<ul class="simple">
+<li>a plugin <strong>editor</strong>, to configure a plugin each time it is deployed</li>
+<li>a plugin <strong>publisher</strong>, to do the automated work of deciding what to publish</li>
+<li>a plugin <strong>template</strong>, to render the information into a web page</li>
+</ul>
+<p>These correspond to the familiar with the Model-View-Template scheme:</p>
+<ul class="simple">
+<li>the plugin <strong>model</strong> to store its configuration</li>
+<li>the plugin <strong>view</strong> that works out what needs to be displayed</li>
+<li>the plugin <strong>template</strong> to render the information</li>
+</ul>
+<p>And so to build your plugin, you&#8217;ll make it out of:</p>
+<ul class="simple">
+<li>a subclass of <tt class="xref py py-class docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin</span></tt> to
+<strong>store the configuration</strong> for your plugin instances</li>
+<li>a subclass of <a class="reference internal" href="api_references.html#cms.plugin_base.CMSPluginBase" title="cms.plugin_base.CMSPluginBase"><tt class="xref py py-class docutils literal"><span class="pre">cms.plugin_base.CMSPluginBase</span></tt></a> that <strong>defines
+the operating logic</strong> of your plugin</li>
+<li>a template that <strong>renders your plugin</strong></li>
+</ul>
+<div class="section" id="a-note-about-cms-plugin-base-cmspluginbase">
+<h3>2.2.1. A note about <a class="reference internal" href="api_references.html#cms.plugin_base.CMSPluginBase" title="cms.plugin_base.CMSPluginBase"><tt class="xref py py-class docutils literal"><span class="pre">cms.plugin_base.CMSPluginBase</span></tt></a><a class="headerlink" href="#a-note-about-cms-plugin-base-cmspluginbase" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="api_references.html#cms.plugin_base.CMSPluginBase" title="cms.plugin_base.CMSPluginBase"><tt class="xref py py-class docutils literal"><span class="pre">cms.plugin_base.CMSPluginBase</span></tt></a> is actually a subclass of <tt class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></tt>.</p>
+<p>It is its <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/templates/api.html#render" title="(in Django v1.3)"><tt class="xref py py-meth docutils literal"><span class="pre">render()</span></tt></a> method that is the plugin&#8217;s <strong>view</strong> function.</p>
+</div>
+<div class="section" id="an-aside-on-models-and-configuration">
+<h3>2.2.2. An aside on models and configuration<a class="headerlink" href="#an-aside-on-models-and-configuration" title="Permalink to this headline">¶</a></h3>
+<p>The plugin <strong>model</strong>, the subclass of <tt class="xref py py-class docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin</span></tt>,
+is actually optional.</p>
+<p>You could have a plugin that didn&#8217;t need to be configured, because it only
+ever did one thing.</p>
+<p>For example, you could have a plugin that always and only publishes information
+about the top-selling record of the past seven days. Obviously, this wouldn&#8217;t
+be very flexible - you wouldn&#8217;t be able to use the same plugin to for the
+best-selling release of the last <em>month</em> instead.</p>
+<p>Usually, you find that it is useful to be able to configure your plugin, and it
+will require a model.</p>
+</div>
+</div>
+<div class="section" id="the-simplest-plugin">
+<h2>2.3. The simplest plugin<a class="headerlink" href="#the-simplest-plugin" title="Permalink to this headline">¶</a></h2>
+<p>You may use <tt class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">startapp</span></tt> to set up the basic layout for you
+plugin app, alternatively, just add a file called <tt class="docutils literal"><span class="pre">cms_plugins.py</span></tt> to an
+existing Django application.</p>
+<p>In there, you place your plugins, in our example the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cms.plugin_base</span> <span class="kn">import</span> <span class="n">CMSPluginBase</span>
+<span class="kn">from</span> <span class="nn">cms.plugin_pool</span> <span class="kn">import</span> <span class="n">plugin_pool</span>
+<span class="kn">from</span> <span class="nn">cms.models.pluginmodel</span> <span class="kn">import</span> <span class="n">CMSPlugin</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="k">class</span> <span class="nc">HelloPlugin</span><span class="p">(</span><span class="n">CMSPluginBase</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">CMSPlugin</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&quot;Hello Plugin&quot;</span><span class="p">)</span>
+    <span class="n">render_template</span> <span class="o">=</span> <span class="s">&quot;hello_plugin.html&quot;</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">context</span>
+
+<span class="n">plugin_pool</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">HelloPlugin</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we&#8217;re almost done, all that&#8217;s left is adding the template. Add the
+following into the root template directory in a file called
+<tt class="docutils literal"><span class="pre">hello_plugin.html</span></tt>:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>Hello <span class="cp">{%</span> <span class="k">if</span> <span class="nv">request.user.is_authenticated</span> <span class="cp">%}{{</span> <span class="nv">request.user.first_name</span> <span class="cp">}}</span> <span class="cp">{{</span> <span class="nv">request.user.last_name</span><span class="cp">}}{%</span> <span class="k">else</span> <span class="cp">%}</span>Guest<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="nt">&lt;/h1&gt;</span>
+</pre></div>
+</div>
+<p>This plugin will now greet the users on your website either by their name if
+they&#8217;re logged in, or as Guest if they&#8217;re not.</p>
+<p>Now let&#8217;s take a closer look at what we did there. The <tt class="docutils literal"><span class="pre">cms_plugins.py</span></tt> files
+are where you should define your subclasses of
+<a class="reference internal" href="api_references.html#cms.plugin_base.CMSPluginBase" title="cms.plugin_base.CMSPluginBase"><tt class="xref py py-class docutils literal"><span class="pre">cms.plugin_base.CMSPluginBase</span></tt></a>, these classes define the different
+plugins.</p>
+<p>There are three required attributes on those classes:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">model</span></tt>: The model you wish to use to store information about this plugin,
+if you do not require any special information, for example configuration, to
+be stored for your plugins, you may just use
+<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin</span></tt>. We&#8217;ll look at that model more
+closely in a bit.</li>
+<li><tt class="docutils literal"><span class="pre">name</span></tt>: The name of your plugin as displayed in the admin. It is generally
+good practice to mark this string as translatable using
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/utils.html#django.utils.translation.ugettext_lazy" title="(in Django v1.3)"><tt class="xref py py-func docutils literal"><span class="pre">django.utils.translation.ugettext_lazy()</span></tt></a>, however this is optional.</li>
+<li><tt class="docutils literal"><span class="pre">render_template</span></tt>: The template to render this plugin with.</li>
+</ul>
+<p>In addition to those three attributes, you must also define a
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/templates/api.html#render" title="(in Django v1.3)"><tt class="xref py py-meth docutils literal"><span class="pre">render()</span></tt></a> method on your subclasses. It is specifically this <cite>render</cite>
+method that is the <strong>view</strong> for your plugin.</p>
+<p>That <cite>render</cite> method takes three arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">context</span></tt>: The context with which the page is rendered.</li>
+<li><tt class="docutils literal"><span class="pre">instance</span></tt>: The instance of your plugin that is rendered.</li>
+<li><tt class="docutils literal"><span class="pre">placeholder</span></tt>: The name of the placeholder that is rendered.</li>
+</ul>
+<p>This method must return a dictionary or an instance of
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/templates/api.html#django.template.Context" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.template.Context</span></tt></a>, which will be used as context to render the
+plugin template.</p>
+</div>
+<div class="section" id="storing-configuration">
+<h2>2.4. Storing configuration<a class="headerlink" href="#storing-configuration" title="Permalink to this headline">¶</a></h2>
+<p>In many cases, you want to store configuration for your plugin instances, for
+example if you have a plugin that shows the latest blog posts, you might want
+to be able to choose the amount of entries shown. Another example would be a
+gallery plugin, where you want to choose the pictures to show for the plugin.</p>
+<p>To do so, you create a Django model by subclassing
+<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin</span></tt> in the <tt class="docutils literal"><span class="pre">models.py</span></tt> of an installed
+application.</p>
+<p>Let&#8217;s improve our <tt class="docutils literal"><span class="pre">HelloPlugin</span></tt> from above by making it configurable what the
+fallback name for non-authenticated users should be.</p>
+<p>In our <tt class="docutils literal"><span class="pre">models.py</span></tt> we add following model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cms.models.pluginmodel</span> <span class="kn">import</span> <span class="n">CMSPlugin</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Hello</span><span class="p">(</span><span class="n">CMSPlugin</span><span class="p">):</span>
+    <span class="n">guest_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;Guest&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you followed the Django tutorial, this shouldn&#8217;t look too new to you. The
+only difference to normal models is that you subclass
+<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin</span></tt> rather than
+<tt class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></tt>.</p>
+<p>Now we need to change our plugin definition to use this model, so our new
+<tt class="docutils literal"><span class="pre">cms_plugins.py</span></tt> looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cms.plugin_base</span> <span class="kn">import</span> <span class="n">CMSPluginBase</span>
+<span class="kn">from</span> <span class="nn">cms.plugin_pool</span> <span class="kn">import</span> <span class="n">plugin_pool</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">models</span> <span class="kn">import</span> <span class="n">Hello</span>
+
+<span class="k">class</span> <span class="nc">HelloPlugin</span><span class="p">(</span><span class="n">CMSPluginBase</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Hello</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&quot;Hello Plugin&quot;</span><span class="p">)</span>
+    <span class="n">render_template</span> <span class="o">=</span> <span class="s">&quot;hello_plugin.html&quot;</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">):</span>
+        <span class="n">context</span><span class="p">[</span><span class="s">&#39;instance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance</span>
+        <span class="k">return</span> <span class="n">context</span>
+
+<span class="n">plugin_pool</span><span class="o">.</span><span class="n">register_plugin</span><span class="p">(</span><span class="n">HelloPlugin</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We changed the <tt class="docutils literal"><span class="pre">model</span></tt> attribute to point to our newly created <tt class="docutils literal"><span class="pre">Hello</span></tt>
+model and pass the model instance to the context.</p>
+<p>As a last step, we have to update our template to make use of this
+new configuration:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>Hello <span class="cp">{%</span> <span class="k">if</span> <span class="nv">request.user.is_authenticated</span> <span class="cp">%}{{</span> <span class="nv">request.user.first_name</span> <span class="cp">}}</span> <span class="cp">{{</span> <span class="nv">request.user.last_name</span><span class="cp">}}{%</span> <span class="k">else</span> <span class="cp">%}{{</span> <span class="nv">instance.guest_name</span> <span class="cp">}}{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="nt">&lt;/h1&gt;</span>
+</pre></div>
+</div>
+<p>The only thing we changed there is that we use the template variable
+<tt class="docutils literal"><span class="pre">{{</span> <span class="pre">instance.guest_name</span> <span class="pre">}}</span></tt> instead of the hardcoded <tt class="docutils literal"><span class="pre">Guest</span></tt> string in the
+else clause.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><tt class="xref py py-class docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin</span></tt> subclasses cannot be further
+subclassed at the moment. In order to make your plugin models reusable,
+please use abstract base models.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>You cannot name your model fields the same as any installed plugins
+lower-cased model name, due to the implicit one-to-one relation Django uses
+for subclassed models. If you use all core plugins, this includes:
+<tt class="docutils literal"><span class="pre">file</span></tt>, <tt class="docutils literal"><span class="pre">flash</span></tt>, <tt class="docutils literal"><span class="pre">googlemap</span></tt>, <tt class="docutils literal"><span class="pre">link</span></tt>, <tt class="docutils literal"><span class="pre">picture</span></tt>, <tt class="docutils literal"><span class="pre">snippetptr</span></tt>,
+<tt class="docutils literal"><span class="pre">teaser</span></tt>, <tt class="docutils literal"><span class="pre">twittersearch</span></tt>, <tt class="docutils literal"><span class="pre">twitterrecententries</span></tt> and <tt class="docutils literal"><span class="pre">video</span></tt>.</p>
+<p class="last">Additionally, it is <em>recommended</em> that you avoid using <tt class="docutils literal"><span class="pre">page</span></tt> as a model
+field, as it is declared as a property of <tt class="xref py py-class docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin</span></tt>,
+and your plugin will not work as intended in the administration without
+further work.</p>
+</div>
+<div class="section" id="handling-relations">
+<h3>2.4.1. Handling Relations<a class="headerlink" href="#handling-relations" title="Permalink to this headline">¶</a></h3>
+<p>If your custom plugin has foreign key or many-to-many relations you are
+responsible for copying those if necessary whenever the CMS copies the plugin.</p>
+<p>To do this you can implement a method called
+<tt class="xref py py-meth docutils literal"><span class="pre">cms.models.pluginmodel.CMSPlugin.copy_relations()</span></tt> on your plugin
+model which gets the <strong>old</strong> instance of the plugin as argument.</p>
+<p>Lets assume this is your plugin:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ArticlePluginModel</span><span class="p">(</span><span class="n">CMSPlugin</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">sections</span> <span class="o">=</span>  <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Section</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+</pre></div>
+</div>
+<p>Now when the plugin gets copied, you want to make sure the sections stay:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">copy_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oldinstance</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sections</span> <span class="o">=</span> <span class="n">oldinstance</span><span class="o">.</span><span class="n">sections</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Your full model now:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ArticlePluginModel</span><span class="p">(</span><span class="n">CMSPlugin</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">sections</span> <span class="o">=</span>  <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Section</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+    <span class="k">def</span> <span class="nf">copy_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oldinstance</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sections</span> <span class="o">=</span> <span class="n">oldinstance</span><span class="o">.</span><span class="n">sections</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="advanced">
+<h2>2.5. Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="plugin-form">
+<h3>2.5.1. Plugin form<a class="headerlink" href="#plugin-form" title="Permalink to this headline">¶</a></h3>
+<p>Since <a class="reference internal" href="api_references.html#cms.plugin_base.CMSPluginBase" title="cms.plugin_base.CMSPluginBase"><tt class="xref py py-class docutils literal"><span class="pre">cms.plugin_base.CMSPluginBase</span></tt></a> extends
+<tt class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></tt>, you can customize the form
+for your plugins just as you would customize your admin interfaces.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to overwrite the form be sure to extend from
+<tt class="docutils literal"><span class="pre">admin/cms/page/plugin_change_form.html</span></tt> to have a unified look across the
+plugins and to have the preview functionality automatically installed.</p>
+</div>
+</div>
+<div class="section" id="handling-media">
+<span id="custom-plugins-handling-media"></span><h3>2.5.2. Handling media<a class="headerlink" href="#handling-media" title="Permalink to this headline">¶</a></h3>
+<p>If your plugin depends on certain media files, javascript or stylesheets, you
+can include them from your plugin template using <a class="reference external" href="https://github.com/ojii/django-sekizai">django-sekizai</a>. Your CMS
+templates are always enforced to have the <tt class="docutils literal"><span class="pre">css</span></tt> and <tt class="docutils literal"><span class="pre">js</span></tt> sekizai namespaces,
+therefore those should be used to include the respective files. For more
+information about django-sekizai, please refer to the
+<a class="reference external" href="http://django-sekizai.readthedocs.org">django-sekizai documentation</a>.</p>
+<div class="section" id="sekizai-style">
+<h4>2.5.2.1. Sekizai style<a class="headerlink" href="#sekizai-style" title="Permalink to this headline">¶</a></h4>
+<p>To fully harness the power of django-sekizai, it is helpful to have a consistent
+style on how to use it. Here is a set of conventions that should, but don&#8217;t
+necessarily need to, be followed:</p>
+<ul class="simple">
+<li>One bit per <tt class="docutils literal"><span class="pre">addtoblock</span></tt>. Always include one external CSS or JS file per
+<tt class="docutils literal"><span class="pre">addtoblock</span></tt> or one snippet per <tt class="docutils literal"><span class="pre">addtoblock</span></tt>. This is needed so
+django-sekizai properly detects duplicate files.</li>
+<li>External files should be on one line, with no spaces or newlines between the
+<tt class="docutils literal"><span class="pre">addtoblock</span></tt> tag and the HTML tags.</li>
+<li>When using embedded javascript or CSS, the HTML tags should be on a newline.</li>
+</ul>
+<p>A <strong>good</strong> example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">sekizai_tags</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">addtoblock</span> <span class="s2">&quot;js&quot;</span> <span class="cp">%}</span><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">MEDIA_URL</span> <span class="cp">}}</span><span class="s">myplugin/js/myjsfile.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span><span class="cp">{%</span> <span class="k">endaddtoblock</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">addtoblock</span> <span class="s2">&quot;js&quot;</span> <span class="cp">%}</span><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">MEDIA_URL</span> <span class="cp">}}</span><span class="s">myplugin/js/myotherfile.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span><span class="cp">{%</span> <span class="k">endaddtoblock</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">addtoblock</span> <span class="s2">&quot;css&quot;</span> <span class="cp">%}</span><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">MEDIA_URL</span> <span class="cp">}}</span><span class="s">myplugin/css/astylesheet.css&quot;</span><span class="nt">&gt;&lt;/script&gt;</span><span class="cp">{%</span> <span class="k">endaddtoblock</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">addtoblock</span> <span class="s2">&quot;js&quot;</span> <span class="cp">%}</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">doSomething</span><span class="p">();</span>
+    <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="cp">{%</span> <span class="k">endaddtoblock</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>A <strong>bad</strong> example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">sekizai_tags</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">addtoblock</span> <span class="s2">&quot;js&quot;</span> <span class="cp">%}</span><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">MEDIA_URL</span> <span class="cp">}}</span><span class="s">myplugin/js/myjsfile.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">MEDIA_URL</span> <span class="cp">}}</span><span class="s">myplugin/js/myotherfile.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span><span class="cp">{%</span> <span class="k">endaddtoblock</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">addtoblock</span> <span class="s2">&quot;css&quot;</span> <span class="cp">%}</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">MEDIA_URL</span> <span class="cp">}}</span><span class="s">myplugin/css/astylesheet.css&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="cp">{%</span> <span class="k">endaddtoblock</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">addtoblock</span> <span class="s2">&quot;js&quot;</span> <span class="cp">%}</span><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">doSomething</span><span class="p">();</span>
+    <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span><span class="cp">{%</span> <span class="k">endaddtoblock</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plugin-context-processors">
+<h3>2.5.3. Plugin Context Processors<a class="headerlink" href="#plugin-context-processors" title="Permalink to this headline">¶</a></h3>
+<p>Plugin context processors are callables that modify all plugins&#8217; context before
+rendering. They are enabled using the <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_PLUGIN_CONTEXT_PROCESSORS"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_PLUGIN_CONTEXT_PROCESSORS</span></tt></a>
+setting.</p>
+<p>A plugin context processor takes 2 arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">instance</span></tt>: The instance of the plugin model</li>
+<li><tt class="docutils literal"><span class="pre">placeholder</span></tt>: The instance of the placeholder this plugin appears in.</li>
+</ul>
+<p>The return value should be a dictionary containing any variables to be added to
+the context.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add_verbose_name</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This plugin context processor adds the plugin model&#39;s verbose_name to context.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;verbose_name&#39;</span><span class="p">:</span> <span class="n">instance</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">verbose_name</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plugin-processors">
+<h3>2.5.4. Plugin Processors<a class="headerlink" href="#plugin-processors" title="Permalink to this headline">¶</a></h3>
+<p>Plugin processors are callables that modify all plugins&#8217; output after rendering.
+They are enabled using the <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_PLUGIN_PROCESSORS"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_PLUGIN_PROCESSORS</span></tt></a> setting.</p>
+<p>A plugin processor takes 4 arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">instance</span></tt>: The instance of the plugin model</li>
+<li><tt class="docutils literal"><span class="pre">placeholder</span></tt>: The instance of the placeholder this plugin appears in.</li>
+<li><tt class="docutils literal"><span class="pre">rendered_content</span></tt>: A string containing the rendered content of the plugin.</li>
+<li><tt class="docutils literal"><span class="pre">original_context</span></tt>: The original context for the template used to render
+the plugin.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Plugin processors are also applied to plugins embedded in Text
+plugins (and any custom plugin allowing nested plugins). Depending on
+what your processor does, this might break the output. For example,
+if your processor wraps the output in a <tt class="docutils literal"><span class="pre">div</span></tt> tag, you might end up
+having <tt class="docutils literal"><span class="pre">div</span></tt> tags inside of <tt class="docutils literal"><span class="pre">p</span></tt> tags, which is invalid. You can
+prevent such cases by returning <tt class="docutils literal"><span class="pre">rendered_content</span></tt> unchanged if
+<tt class="docutils literal"><span class="pre">instance._render_meta.text_enabled</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt>, which is the case
+when rendering an embedded plugin.</p>
+</div>
+<div class="section" id="example">
+<h4>2.5.4.1. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<p>Suppose you want to put wrap each plugin in the main placeholder in a colored
+box, but it would be too complicated to edit each individual plugin&#8217;s template:</p>
+<p>In your <tt class="docutils literal"><span class="pre">settings.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_PLUGIN_PROCESSORS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;yourapp.cms_plugin_processors.wrap_in_colored_box&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In your <tt class="docutils literal"><span class="pre">yourapp.cms_plugin_processors.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">wrap_in_colored_box</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">,</span> <span class="n">rendered_content</span><span class="p">,</span> <span class="n">original_context</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This plugin processor wraps each plugin&#39;s output in a colored box if it is in the &quot;main&quot; placeholder.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c"># Plugins not in the main placeholder should remain unchanged</span>
+    <span class="c"># Plugins embedded in Text should remain unchanged in order not to break output</span>
+    <span class="k">if</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">slot</span> <span class="o">!=</span> <span class="s">&#39;main&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">_render_meta</span><span class="o">.</span><span class="n">text_enabled</span> <span class="ow">and</span> <span class="n">instance</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">rendered_content</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Context</span><span class="p">,</span> <span class="n">Template</span>
+        <span class="c"># For simplicity&#39;s sake, construct the template from a string:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s">&#39;&lt;div style=&quot;border: 10px {{ border_color }} solid; background: {{ background_color }};&quot;&gt;{{ content|safe }}&lt;/div&gt;&#39;</span><span class="p">)</span>
+        <span class="c"># Prepare that template&#39;s context:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span>
+            <span class="s">&#39;content&#39;</span><span class="p">:</span> <span class="n">rendered_content</span><span class="p">,</span>
+            <span class="c"># Some plugin models might allow you to customize the colors,</span>
+            <span class="c"># for others, use default colors:</span>
+            <span class="s">&#39;background_color&#39;</span><span class="p">:</span> <span class="n">instance</span><span class="o">.</span><span class="n">background_color</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="s">&#39;background_color&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;lightyellow&#39;</span><span class="p">,</span>
+            <span class="s">&#39;border_color&#39;</span><span class="p">:</span> <span class="n">instance</span><span class="o">.</span><span class="n">border_color</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="s">&#39;border_color&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;lightblue&#39;</span><span class="p">,</span>
+        <span class="p">})</span>
+        <span class="c"># Finally, render the content through that template, and return the output</span>
+        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">2. Custom Plugins</a><ul>
+<li><a class="reference internal" href="#why-would-you-need-to-write-a-plugin">2.1. Why would you need to write a plugin?</a></li>
+<li><a class="reference internal" href="#overview">2.2. Overview</a><ul>
+<li><a class="reference internal" href="#a-note-about-cms-plugin-base-cmspluginbase">2.2.1. A note about <tt class="docutils literal"><span class="pre">cms.plugin_base.CMSPluginBase</span></tt></a></li>
+<li><a class="reference internal" href="#an-aside-on-models-and-configuration">2.2.2. An aside on models and configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-simplest-plugin">2.3. The simplest plugin</a></li>
+<li><a class="reference internal" href="#storing-configuration">2.4. Storing configuration</a><ul>
+<li><a class="reference internal" href="#handling-relations">2.4.1. Handling Relations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced">2.5. Advanced</a><ul>
+<li><a class="reference internal" href="#plugin-form">2.5.1. Plugin form</a></li>
+<li><a class="reference internal" href="#handling-media">2.5.2. Handling media</a><ul>
+<li><a class="reference internal" href="#sekizai-style">2.5.2.1. Sekizai style</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-context-processors">2.5.3. Plugin Context Processors</a></li>
+<li><a class="reference internal" href="#plugin-processors">2.5.4. Plugin Processors</a><ul>
+<li><a class="reference internal" href="#example">2.5.4.1. Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="extending_examples.html"
+                                  title="previous chapter">1. Extending the CMS: Examples</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="app_integration.html"
+                                  title="next chapter">3. App Integration</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/extending_cms/custom_plugins.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="app_integration.html" title="3. App Integration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="extending_examples.html" title="1. Extending the CMS: Examples"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

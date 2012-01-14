@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Template Tags &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="4. Command Line Interface" href="cli.html" />
+    <link rel="prev" title="2. Sitemap Guide" href="sitemap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cli.html" title="4. Command Line Interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sitemap.html" title="2. Sitemap Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="template-tags">
+<h1>3. Template Tags<a class="headerlink" href="#template-tags" title="Permalink to this headline">¶</a></h1>
+<p>To use any of the following templatetags you need to load them first at the
+top of your template:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">cms_tags</span> <span class="nv">menu_tags</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<div class="section" id="placeholder">
+<span id="std:templatetag-placeholder"></span><h2>3.1. placeholder<a class="headerlink" href="#placeholder" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">placeholder</span></tt> templatetag defines a placeholder on a page. All
+placeholders in a template will be auto-detected and can be filled with
+plugins when editing a page that is using said template. When rendering, the
+content of these plugins will appear where the <tt class="docutils literal"><span class="pre">placeholder</span></tt> tag was.</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>If you want additional content to be displayed in case the placeholder is
+empty, use the <tt class="docutils literal"><span class="pre">or</span></tt> argument and an additional <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">endplaceholder</span> <span class="pre">%}</span></tt>
+closing tag. Everything between <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">placeholder</span> <span class="pre">&quot;...&quot;</span> <span class="pre">or</span> <span class="pre">%}</span></tt> and <tt class="docutils literal"><span class="pre">{%</span>
+<span class="pre">endplaceholder</span> <span class="pre">%}</span></tt> is rendered instead if the placeholder has no plugins or
+the plugins do not generate any output.</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="k">or</span> <span class="cp">%}</span>There is no content.<span class="cp">{%</span> <span class="k">endplaceholder</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>If you want to add extra variables to the context of the placeholder, you
+should use Django&#8217;s <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/templates/builtins.html#std:templatetag-with" title="(in Django v1.3)"><tt class="xref std std-ttag docutils literal"><span class="pre">with</span></tt></a> tag. For instance, if you want to resize images
+from your templates according to a context variable called <tt class="docutils literal"><span class="pre">width</span></tt>, you can
+pass it as follows:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">with</span> <span class="m">320</span> <span class="k">as</span> <span class="nv">width</span> <span class="cp">%}{%</span> <span class="k">placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="cp">%}{%</span> <span class="k">endwith</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>If you want the placeholder to inherit the content of a placeholder with the
+same name on parent pages, simply pass the <tt class="docutils literal"><span class="pre">inherit</span></tt> argument:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="nv">inherit</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>This will walk the page tree up till the root page and will show the first
+placeholder it can find with content.</p>
+<p>It&#8217;s also possible to combine this with the <tt class="docutils literal"><span class="pre">or</span></tt> argument to show an
+ultimate fallback if the placeholder and none of the placeholders on parent
+pages have plugins that generate content:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="nv">inherit</span> <span class="k">or</span> <span class="cp">%}</span>There is no spoon.<span class="cp">{%</span> <span class="k">endplaceholder</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>See also the <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_PLACEHOLDER_CONF"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_PLACEHOLDER_CONF</span></tt></a> setting where you can also add extra
+context variables and change some other placeholder behavior.</p>
+</div>
+<div class="section" id="show-placeholder">
+<span id="std:templatetag-show_placeholder"></span><h2>3.2. show_placeholder<a class="headerlink" href="#show-placeholder" title="Permalink to this headline">¶</a></h2>
+<p>Displays a specific placeholder from a given page. This is useful if you want
+to have some more or less static content that is shared among many pages, such
+as a footer.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">placeholder_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">page_lookup</span></tt> (see <a class="reference internal" href="#page-lookup">Page Lookup</a> for more information)</li>
+<li><tt class="docutils literal"><span class="pre">language</span></tt> (optional)</li>
+<li><tt class="docutils literal"><span class="pre">site</span></tt> (optional)</li>
+</ul>
+<p>Examples:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_placeholder</span> <span class="s2">&quot;footer&quot;</span> <span class="s2">&quot;footer_container_page&quot;</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">show_placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="nv">request.current_page.parent_id</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">show_placeholder</span> <span class="s2">&quot;teaser&quot;</span> <span class="nv">request.current_page.get_root</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<div class="section" id="page-lookup">
+<h3>3.2.1. Page Lookup<a class="headerlink" href="#page-lookup" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">page_lookup</span></tt> argument, passed to several templatetags to retrieve a
+page, can be of any of the following types:</p>
+<ul class="simple">
+<li><tt class="xref py py-class docutils literal"><span class="pre">str</span></tt>: interpreted as the <tt class="docutils literal"><span class="pre">reverse_id</span></tt> field of the desired page, which
+can be set in the &#8220;Advanced&#8221; section when editing a page.</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">int</span></tt>: interpreted as the primary key (<tt class="docutils literal"><span class="pre">pk</span></tt> field) of the desired page</li>
+<li><a class="reference external" href="http://docs.python.org/2.6/library/stdtypes.html#dict" title="(in Python v2.6)"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a>: a dictionary containing keyword arguments to find the desired page
+(for instance: <tt class="docutils literal"><span class="pre">{'pk':</span> <span class="pre">1}</span></tt>)</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">Page</span></tt>: you can also pass a page object directly, in which case there will
+be no database lookup.</li>
+</ul>
+<p>If you know the exact page you are referring to, it is a good idea to use a
+<tt class="docutils literal"><span class="pre">reverse_id</span></tt> (a string used to uniquely name a page) rather than a
+hard-coded numeric ID in your template. For example, you might have a help
+page that you want to link to or display parts of on all pages. To do this,
+you would first open the help page in the admin interface and enter an ID
+(such as <tt class="docutils literal"><span class="pre">help</span></tt>) under the &#8216;Advanced&#8217; tab of the form. Then you could use
+that <tt class="docutils literal"><span class="pre">reverse_id</span></tt> with the appropriate templatetags:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_placeholder</span> <span class="s2">&quot;right-column&quot;</span> <span class="s2">&quot;help&quot;</span> <span class="cp">%}</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">page_url</span> <span class="s2">&quot;help&quot;</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="nt">&gt;</span>Help page<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+</div>
+<p>If you are referring to a page <cite>relative</cite> to the current page, you&#8217;ll probably
+have to use a numeric page ID or a page object. For instance, if you want the
+content of the parent page display on the current page, you can use:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="nv">request.current_page.parent_id</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>Or, suppose you have a placeholder called <tt class="docutils literal"><span class="pre">teaser</span></tt> on a page that, unless a
+content editor has filled it with content specific to the current page, should
+inherit the content of its root-level ancestor:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">placeholder</span> <span class="s2">&quot;teaser&quot;</span> <span class="k">or</span> <span class="cp">%}</span>
+    <span class="cp">{%</span> <span class="k">show_placeholder</span> <span class="s2">&quot;teaser&quot;</span> <span class="nv">request.current_page.get_root</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">endplaceholder</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="show-uncached-placeholder">
+<span id="std:templatetag-show_uncached_placeholder"></span><h2>3.3. show_uncached_placeholder<a class="headerlink" href="#show-uncached-placeholder" title="Permalink to this headline">¶</a></h2>
+<p>The same as <a class="reference internal" href="#std:templatetag-show_placeholder"><tt class="xref std std-ttag docutils literal"><span class="pre">show_placeholder</span></tt></a>, but the placeholder contents will not be
+cached.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">placeholder_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">page_lookup</span></tt> (see <a class="reference internal" href="#page-lookup">Page Lookup</a> for more information)</li>
+<li><tt class="docutils literal"><span class="pre">language</span></tt> (optional)</li>
+<li><tt class="docutils literal"><span class="pre">site</span></tt> (optional)</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_uncached_placeholder</span> <span class="s2">&quot;footer&quot;</span> <span class="s2">&quot;footer_container_page&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="page-url">
+<span id="std:templatetag-page_url"></span><h2>3.4. page_url<a class="headerlink" href="#page-url" title="Permalink to this headline">¶</a></h2>
+<p>Displays the URL of a page in the current language.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">page_lookup</span></tt> (see <a class="reference internal" href="#page-lookup">Page Lookup</a> for more information)</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">page_url</span> <span class="s2">&quot;help&quot;</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="nt">&gt;</span>Help page<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">page_url</span> <span class="nv">request.current_page.parent</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="nt">&gt;</span>Parent page<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="page-attribute">
+<span id="std:templatetag-page_attribute"></span><h2>3.5. page_attribute<a class="headerlink" href="#page-attribute" title="Permalink to this headline">¶</a></h2>
+<p>This templatetag is used to display an attribute of the current page in the
+current language.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">attribute_name</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">page_lookup</span></tt> (optional; see <a class="reference internal" href="#page-lookup">Page Lookup</a> for more
+information)</li>
+</ul>
+<p>Possible values for <tt class="docutils literal"><span class="pre">attribute_name</span></tt> are: <tt class="docutils literal"><span class="pre">&quot;title&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;menu_title&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">&quot;page_title&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;slug&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;meta_description&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;meta_keywords&quot;</span></tt>
+(note that you can also supply that argument without quotes, but this is
+deprecated because the argument might also be a template variable).</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">page_attribute</span> <span class="s2">&quot;page_title&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>If you supply the optional <tt class="docutils literal"><span class="pre">page_lookup</span></tt> argument, you will get the page
+attribute from the page found by that argument.</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">page_attribute</span> <span class="s2">&quot;page_title&quot;</span> <span class="s2">&quot;my_page_reverse_id&quot;</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">page_attribute</span> <span class="s2">&quot;page_title&quot;</span> <span class="nv">request.current_page.parent_id</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">page_attribute</span> <span class="s2">&quot;slug&quot;</span> <span class="nv">request.current_page.get_root</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-menu">
+<span id="std:templatetag-show_menu"></span><h2>3.6. show_menu<a class="headerlink" href="#show-menu" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">show_menu</span></tt> tag renders the navigation of the current page. You can
+overwrite the appearance and the HTML if you add a <tt class="docutils literal"><span class="pre">cms/menu.html</span></tt> template
+to your project or edit the one provided with django-cms. <tt class="docutils literal"><span class="pre">show_menu</span></tt> takes
+four optional parameters: <tt class="docutils literal"><span class="pre">start_level</span></tt>, <tt class="docutils literal"><span class="pre">end_level</span></tt>, <tt class="docutils literal"><span class="pre">extra_inactive</span></tt>,
+and <tt class="docutils literal"><span class="pre">extra_active</span></tt>.</p>
+<p>The first two parameters, <tt class="docutils literal"><span class="pre">start_level</span></tt> (default=0) and <tt class="docutils literal"><span class="pre">end_level</span></tt>
+(default=100) specify from what level to which level should the navigation be
+rendered. If you have a home as a root node and don&#8217;t want to display home you
+can render the navigation only after level 1.</p>
+<p>The third parameter, <tt class="docutils literal"><span class="pre">extra_inactive</span></tt> (default=0), specifies how many levels
+of navigation should be displayed if a node is not a direct ancestor or
+descendant of the current active node.</p>
+<p>Finally, the fourth parameter, <tt class="docutils literal"><span class="pre">extra_active</span></tt> (default=100), specifies how
+many levels of descendants of the currently active node should be displayed.</p>
+<div class="section" id="some-examples">
+<h3>3.6.1. Some Examples<a class="headerlink" href="#some-examples" title="Permalink to this headline">¶</a></h3>
+<p>Complete navigation (as a nested list):</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_menu</span> <span class="m">0</span> <span class="m">100</span> <span class="m">100</span> <span class="m">100</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>Navigation with active tree (as a nested list):</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_menu</span> <span class="m">0</span> <span class="m">100</span> <span class="m">0</span> <span class="m">100</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>Navigation with only one active extra level:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_menu</span> <span class="m">0</span> <span class="m">100</span> <span class="m">0</span> <span class="m">1</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>Level 1 navigation (as a nested list):</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_menu</span> <span class="m">1</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>Navigation with a custom template:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_menu</span> <span class="m">0</span> <span class="m">100</span> <span class="m">100</span> <span class="m">100</span> <span class="s2">&quot;myapp/menu.html&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="show-menu-below-id">
+<span id="std:templatetag-show_menu_below_id"></span><h2>3.7. show_menu_below_id<a class="headerlink" href="#show-menu-below-id" title="Permalink to this headline">¶</a></h2>
+<p>If you have set an id in the advanced settings of a page, you can display the
+submenu of this page with a template tag. For example, we have a page called
+meta that is not displayed in the navigation and that has the id &#8220;meta&#8221;:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_menu_below_id</span> <span class="s2">&quot;meta&quot;</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>You can give it the same optional parameters as <tt class="docutils literal"><span class="pre">show_menu</span></tt>:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_menu_below_id</span> <span class="s2">&quot;meta&quot;</span> <span class="m">0</span> <span class="m">100</span> <span class="m">100</span> <span class="m">100</span> <span class="s2">&quot;myapp/menu.html&quot;</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-sub-menu">
+<span id="std:templatetag-show_sub_menu"></span><h2>3.8. show_sub_menu<a class="headerlink" href="#show-sub-menu" title="Permalink to this headline">¶</a></h2>
+<p>Displays the sub menu of the current page (as a nested list).
+Takes one argument that specifies how many levels deep should the submenu be
+displayed. The template can be found at <tt class="docutils literal"><span class="pre">cms/sub_menu.html</span></tt>:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_sub_menu</span> <span class="m">1</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>Or with a custom template:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">show_sub_menu</span> <span class="m">1</span> <span class="s2">&quot;myapp/submenu.html&quot;</span> <span class="cp">%}</span>
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-breadcrumb">
+<span id="std:templatetag-show_breadcrumb"></span><h2>3.9. show_breadcrumb<a class="headerlink" href="#show-breadcrumb" title="Permalink to this headline">¶</a></h2>
+<p>Renders the breadcrumb navigation of the current page.
+The template for the HTML can be found at <tt class="docutils literal"><span class="pre">cms/breadcrumb.html</span></tt>:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_breadcrumb</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>Or with a custom template and only display level 2 or higher:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_breadcrumb</span> <span class="m">2</span> <span class="s2">&quot;myapp/breadcrumb.html&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>Usually, only pages visible in the navigation are shown in the
+breadcrumb. To include <em>all</em> pages in the breadcrumb, write:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">show_breadcrumb</span> <span class="m">0</span> <span class="s2">&quot;cms/breadcrumb.html&quot;</span> <span class="m">0</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>If the current URL is not handled by the CMS or by a navigation extender,
+the current menu node can not be determined.
+In this case you may need to provide your own breadcrumb via the template.
+This is mostly needed for pages like login, logout and third-party apps.
+This can easily be accomplished by a block you overwrite in your templates.</p>
+<p>For example in your base.html:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+    <span class="cp">{%</span> <span class="k">block</span> <span class="nv">breadcrumb</span> <span class="cp">%}</span>
+    <span class="cp">{%</span> <span class="k">show_breadcrumb</span> <span class="cp">%}</span>
+    <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+<span class="nt">&lt;ul&gt;</span>
+</pre></div>
+</div>
+<p>And then in your app template:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">block</span> <span class="nv">breadcrumb</span> <span class="cp">%}</span>
+<span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="nt">&lt;li&gt;</span>My current page<span class="nt">&lt;/li&gt;</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="page-language-url">
+<span id="std:templatetag-page_language_url"></span><h2>3.10. page_language_url<a class="headerlink" href="#page-language-url" title="Permalink to this headline">¶</a></h2>
+<p>Returns the url of the current page in an other language:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">page_language_url</span> <span class="nv">de</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">page_language_url</span> <span class="nv">fr</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">page_language_url</span> <span class="nv">en</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>If the current url has no cms-page and is handled by a navigation extender and
+the url changes based on the language: You will need to set a language_changer
+function with the set_language_changer function in cms.utils.</p>
+<p>For more information, see <a class="reference internal" href="i18n.html"><em>Internationalization</em></a>.</p>
+</div>
+<div class="section" id="language-chooser">
+<span id="std:templatetag-language_chooser"></span><h2>3.11. language_chooser<a class="headerlink" href="#language-chooser" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">language_chooser</span></tt> template tag will display a language chooser for the
+current page. You can modify the template in <tt class="docutils literal"><span class="pre">menu/language_chooser.html</span></tt> or
+provide your own template if necessary.</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">language_chooser</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>or with custom template:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">language_chooser</span> <span class="s2">&quot;myapp/language_chooser.html&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>The language_chooser has three different modes in which it will display the
+languages you can choose from: &#8220;raw&#8221; (default), &#8220;native&#8221;, &#8220;current&#8221; and &#8220;short&#8221;.
+It can be passed as last argument to the <tt class="docutils literal"><span class="pre">language_chooser</span> <span class="pre">tag</span></tt> as a string.
+In &#8220;raw&#8221; mode, the language will be displayed like it&#8217;s verbose name in the
+settings. In &#8220;native&#8221; mode the languages are displayed in their actual language
+(eg. German will be displayed &#8220;Deutsch&#8221;, Japanese as &#8220;日本語&#8221; etc). In &#8220;current&#8221;
+mode the languages are translated into the current language the user is seeing
+the site in (eg. if the site is displayed in German, Japanese will be displayed
+as &#8220;Japanisch&#8221;). &#8220;Short&#8221; mode takes the language code (eg. &#8220;en&#8221;) to display.</p>
+<p>If the current url has no cms-page and is handled by a navigation extender and
+the url changes based on the language: You will need to set a language_changer
+function with the set_language_changer function in cms.utils.</p>
+<p>For more information, see <a class="reference internal" href="i18n.html"><em>Internationalization</em></a>.</p>
+</div>
+<div class="section" id="cms-toolbar">
+<span id="std:templatetag-cms_toolbar"></span><h2>3.12. cms_toolbar<a class="headerlink" href="#cms-toolbar" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">cms_toolbar</span></tt> templatetag will add the needed css and javascript to the
+sekizai blocks in the base template. The templatetag should be placed somewhere
+within the body of the HTML (within <tt class="docutils literal"><span class="pre">&lt;body&gt;...&lt;/body&gt;</span></tt>).</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;body&gt;</span>
+<span class="cp">{%</span> <span class="k">cms_toolbar</span> <span class="cp">%}</span>
+...
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">3. Template Tags</a><ul>
+<li><a class="reference internal" href="#placeholder">3.1. placeholder</a></li>
+<li><a class="reference internal" href="#show-placeholder">3.2. show_placeholder</a><ul>
+<li><a class="reference internal" href="#page-lookup">3.2.1. Page Lookup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#show-uncached-placeholder">3.3. show_uncached_placeholder</a></li>
+<li><a class="reference internal" href="#page-url">3.4. page_url</a></li>
+<li><a class="reference internal" href="#page-attribute">3.5. page_attribute</a></li>
+<li><a class="reference internal" href="#show-menu">3.6. show_menu</a><ul>
+<li><a class="reference internal" href="#some-examples">3.6.1. Some Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#show-menu-below-id">3.7. show_menu_below_id</a></li>
+<li><a class="reference internal" href="#show-sub-menu">3.8. show_sub_menu</a></li>
+<li><a class="reference internal" href="#show-breadcrumb">3.9. show_breadcrumb</a></li>
+<li><a class="reference internal" href="#page-language-url">3.10. page_language_url</a></li>
+<li><a class="reference internal" href="#language-chooser">3.11. language_chooser</a></li>
+<li><a class="reference internal" href="#cms-toolbar">3.12. cms_toolbar</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="sitemap.html"
+                                  title="previous chapter">2. Sitemap Guide</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="cli.html"
+                                  title="next chapter">4. Command Line Interface</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/advanced/templatetags.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cli.html" title="4. Command Line Interface"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sitemap.html" title="2. Sitemap Guide"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

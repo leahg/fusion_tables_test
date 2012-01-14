@@ -1,0 +1,569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Configuration &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="6. Navigation" href="navigation.html" />
+    <link rel="prev" title="4. Using South with django CMS" href="using_south.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="navigation.html" title="6. Navigation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="using_south.html" title="4. Using South with django CMS"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuration">
+<span id="id1"></span><h1>5. Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>The django CMS has a lot of settings you can use to customize your installation
+of the CMS to be exactly like you want it to be.</p>
+<div class="section" id="required-settings">
+<h2>5.1. Required Settings<a class="headerlink" href="#required-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-templates">
+<span id="std:setting-CMS_TEMPLATES"></span><h3>5.1.1. CMS_TEMPLATES<a class="headerlink" href="#cms-templates" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">()</span></tt> (Not a valid setting!)</p>
+<p>A list of templates you can select for a page.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_TEMPLATES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;base.html&#39;</span><span class="p">,</span> <span class="n">gettext</span><span class="p">(</span><span class="s">&#39;default&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s">&#39;2col.html&#39;</span><span class="p">,</span> <span class="n">gettext</span><span class="p">(</span><span class="s">&#39;2 Column&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s">&#39;3col.html&#39;</span><span class="p">,</span> <span class="n">gettext</span><span class="p">(</span><span class="s">&#39;3 Column&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s">&#39;extra.html&#39;</span><span class="p">,</span> <span class="n">gettext</span><span class="p">(</span><span class="s">&#39;Some extra fancy template&#39;</span><span class="p">)),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All templates defined in <a class="reference internal" href="#std:setting-CMS_TEMPLATES"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_TEMPLATES</span></tt></a> must contain at least the
+<tt class="docutils literal"><span class="pre">js</span></tt> and <tt class="docutils literal"><span class="pre">css</span></tt> sekizai namespaces, for more information, see
+<a class="reference internal" href="tutorial.html#sekizai-namespaces"><em>Static files handling with sekizai</em></a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="basic-customization">
+<h2>5.2. Basic Customization<a class="headerlink" href="#basic-customization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-template-inheritance">
+<span id="std:setting-CMS_TEMPLATE_INHERITANCE"></span><h3>5.2.1. CMS_TEMPLATE_INHERITANCE<a class="headerlink" href="#cms-template-inheritance" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">True</span></tt></p>
+<p><em>Optional</em>
+Enables the inheritance of templates from parent pages.</p>
+<p>If this is enabled, pages have the additional template option to inherit their
+template from the nearest ancestor. New pages default to this setting if the
+new page is not a root page.</p>
+</div>
+<div class="section" id="cms-placeholder-conf">
+<span id="std:setting-CMS_PLACEHOLDER_CONF"></span><h3>5.2.2. CMS_PLACEHOLDER_CONF<a class="headerlink" href="#cms-placeholder-conf" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">{}</span></tt>
+<strong>Optional</strong></p>
+<p>Used to configure placeholders. If not given, all plugins are available in all
+placeholders.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>CMS_PLACEHOLDER_CONF = {
+    'content': {
+        'plugins': ('TextPlugin', 'PicturePlugin'),
+        'text_only_plugins': ('LinkPlugin',)
+        'extra_context': {"width":640},
+        'name':gettext("Content"),
+    },
+    'right-column': {
+        "plugins": ('TeaserPlugin', 'LinkPlugin'),
+        "extra_context": {"width":280},
+        'name':gettext("Right Column"),
+        'limits': {
+            'global': 2,
+            'TeaserPlugin': 1,
+            'LinkPlugin': 1,
+        },
+    },
+    'base.html content': {
+        "plugins": {'TextPlugin', 'PicturePlugin', 'TeaserPlugin'}
+    },
+}</pre>
+</div>
+<p>You can combine template names and placeholder names to granually define
+plugins, as shown above with &#8216;&#8217;base.html content&#8217;&#8216;.</p>
+<p><strong>plugins</strong></p>
+<p>A list of plugins that can be added to this placeholder. If not supplied, all
+plugins can be selected.</p>
+<p><strong>text_only_plugins</strong></p>
+<p>A list of additional plugins available only in the TextPlugin,
+these plugins can&#8217;t be added directly to this placeholder.</p>
+<p><strong>extra_context</strong></p>
+<p>Extra context that plugins in this placeholder receive.</p>
+<p><strong>name</strong></p>
+<p>The name displayed in the Django admin. With the gettext stub, the name can be
+internationalized.</p>
+<p><strong>limits</strong></p>
+<p>Limit the number of plugins that can be placed inside this placeholder.
+Dictionary keys are plugin names; values are their respective limits. Special
+case: &#8220;global&#8221; - Limit the absolute number of plugins in this placeholder
+regardless of type (takes precedence over the type-specific limits).</p>
+</div>
+<div class="section" id="cms-plugin-context-processors">
+<span id="std:setting-CMS_PLUGIN_CONTEXT_PROCESSORS"></span><h3>5.2.3. CMS_PLUGIN_CONTEXT_PROCESSORS<a class="headerlink" href="#cms-plugin-context-processors" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">[]</span></tt></p>
+<p>A list of plugin context processors. Plugin context processors are callables
+that modify all plugin&#8217;s context before rendering. See
+<a class="reference internal" href="../extending_cms/custom_plugins.html"><em>Custom Plugins</em></a> for more information.</p>
+</div>
+<div class="section" id="cms-plugin-processors">
+<span id="std:setting-CMS_PLUGIN_PROCESSORS"></span><h3>5.2.4. CMS_PLUGIN_PROCESSORS<a class="headerlink" href="#cms-plugin-processors" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">[]</span></tt></p>
+<p>A list of plugin processors. Plugin processors are callables that modify all
+plugin&#8217;s output after rendering. See <a class="reference internal" href="../extending_cms/custom_plugins.html"><em>Custom Plugins</em></a> for
+more information.</p>
+</div>
+<div class="section" id="cms-apphooks">
+<span id="std:setting-CMS_APPHOOKS"></span><h3>5.2.5. CMS_APPHOOKS<a class="headerlink" href="#cms-apphooks" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">()</span></tt></p>
+<p>A list of import paths for <tt class="xref py py-class docutils literal"><span class="pre">cms.app_base.CMSApp</span></tt> subclasses.</p>
+<p>Defaults to an empty list which means CMS applications are auto-discovered in
+all <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> by trying to import their <tt class="docutils literal"><span class="pre">cms_app</span></tt> module.</p>
+<p>If this setting is set, the auto-discovery is disabled.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_APPHOOKS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;myapp.cms_app.MyApp&#39;</span><span class="p">,</span>
+    <span class="s">&#39;otherapp.cms_app.MyFancyApp&#39;</span><span class="p">,</span>
+    <span class="s">&#39;sampleapp.cms_app.SampleApp&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="placeholder-frontend-editing">
+<span id="std:setting-PLACEHOLDER_FRONTEND_EDITING"></span><h3>5.2.6. PLACEHOLDER_FRONTEND_EDITING<a class="headerlink" href="#placeholder-frontend-editing" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">True</span></tt></p>
+<p>If set to <tt class="xref docutils literal"><span class="pre">False</span></tt>, frontend editing is not available for models using
+<tt class="xref py py-class docutils literal"><span class="pre">cms.models.fields.PlaceholderField</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="editor-configuration">
+<h2>5.3. Editor configuration<a class="headerlink" href="#editor-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Wymeditor from <tt class="xref py py-mod docutils literal"><span class="pre">cms.plugins.text</span></tt> plugin can take the same
+configuration as vanilla Wymeditor. Therefore you will need to learn
+how to configure that. The best way to understand this is to head
+over to <a class="reference external" href="http://files.wymeditor.org/wymeditor/trunk/src/examples/">Wymeditor examples page</a>
+After understand how Wymeditor works.</p>
+<p>The <tt class="xref py py-mod docutils literal"><span class="pre">cms.plugins.text</span></tt> plugin exposes several variables named
+WYM_* that correspond to the wym configuration. The simplest
+way to get started with this is to go to <tt class="docutils literal"><span class="pre">cms/plugins/text/settings.py</span></tt>
+and copy over the WYM_* variables and you will realize they
+match one to one to Wymeditor&#8217;s.</p>
+<p>Currently the following variables are available:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">WYM_TOOLS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WYM_CONTAINERS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WYM_CLASSES</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WYM_STYLES</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">WYM_STYLESHEET</span></tt></li>
+</ul>
+</div>
+<div class="section" id="i18n-and-l10n">
+<h2>5.4. I18N and L10N<a class="headerlink" href="#i18n-and-l10n" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-hide-untranslated">
+<span id="std:setting-CMS_HIDE_UNTRANSLATED"></span><h3>5.4.1. CMS_HIDE_UNTRANSLATED<a class="headerlink" href="#cms-hide-untranslated" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">True</span></tt></p>
+<p>By default django CMS hides menu items that are not yet translated into the
+current language. With this setting set to False they will show up anyway.</p>
+</div>
+<div class="section" id="cms-languages">
+<span id="std:setting-CMS_LANGUAGES"></span><h3>5.4.2. CMS_LANGUAGES<a class="headerlink" href="#cms-languages" title="Permalink to this headline">¶</a></h3>
+<p>Default: Value of <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-LANGUAGES" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">LANGUAGES</span></tt></a></p>
+<p>Defines the languages available in django CMS.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_LANGUAGES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&#39;fr&#39;</span><span class="p">,</span> <span class="n">gettext</span><span class="p">(</span><span class="s">&#39;French&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s">&#39;de&#39;</span><span class="p">,</span> <span class="n">gettext</span><span class="p">(</span><span class="s">&#39;German&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="n">gettext</span><span class="p">(</span><span class="s">&#39;English&#39;</span><span class="p">)),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Make sure you only define languages which are also in <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-LANGUAGES" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">LANGUAGES</span></tt></a>.</p>
+</div>
+</div>
+<div class="section" id="cms-language-fallback">
+<span id="std:setting-CMS_LANGUAGE_FALLBACK"></span><h3>5.4.3. CMS_LANGUAGE_FALLBACK<a class="headerlink" href="#cms-language-fallback" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">True</span></tt></p>
+<p>This will redirect the browser to the same page in another language if the
+page is not available in the current language.</p>
+</div>
+<div class="section" id="cms-language-conf">
+<span id="std:setting-CMS_LANGUAGE_CONF"></span><h3>5.4.4. CMS_LANGUAGE_CONF<a class="headerlink" href="#cms-language-conf" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">{}</span></tt></p>
+<p>Language fallback ordering for each language.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_LANGUAGE_CONF</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;de&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="s">&#39;fr&#39;</span><span class="p">],</span>
+    <span class="s">&#39;en&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;de&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cms-site-languages">
+<span id="std:setting-CMS_SITE_LANGUAGES"></span><h3>5.4.5. CMS_SITE_LANGUAGES<a class="headerlink" href="#cms-site-languages" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">{}</span></tt></p>
+<p>If you have more than one site and <a class="reference internal" href="#std:setting-CMS_LANGUAGES"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_LANGUAGES</span></tt></a> differs between
+the sites, you may want to fill this out so if you switch between the sites
+in the admin you only get the languages available on this site.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_SITE_LANGUAGES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:[</span><span class="s">&#39;en&#39;</span><span class="p">,</span><span class="s">&#39;de&#39;</span><span class="p">],</span>
+    <span class="mi">2</span><span class="p">:[</span><span class="s">&#39;en&#39;</span><span class="p">,</span><span class="s">&#39;fr&#39;</span><span class="p">],</span>
+    <span class="mi">3</span><span class="p">:[</span><span class="s">&#39;en&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cms-frontend-languages">
+<span id="std:setting-CMS_FRONTEND_LANGUAGES"></span><h3>5.4.6. CMS_FRONTEND_LANGUAGES<a class="headerlink" href="#cms-frontend-languages" title="Permalink to this headline">¶</a></h3>
+<p>Default: Value of <a class="reference internal" href="#std:setting-CMS_LANGUAGES"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_LANGUAGES</span></tt></a></p>
+<p>A list of languages django CMS uses in the frontend. For example, if
+you decide you want to add a new language to your page but don&#8217;t want to
+show it to the world yet.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_FRONTEND_LANGUAGES</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;de&quot;</span><span class="p">,</span> <span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;pt-BR&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="media-settings">
+<h2>5.5. Media Settings<a class="headerlink" href="#media-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-media-path">
+<span id="std:setting-CMS_MEDIA_PATH"></span><h3>5.5.1. CMS_MEDIA_PATH<a class="headerlink" href="#cms-media-path" title="Permalink to this headline">¶</a></h3>
+<p>default: <tt class="docutils literal"><span class="pre">cms/</span></tt></p>
+<p>The path from <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MEDIA_ROOT" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> to the media files located in <tt class="docutils literal"><span class="pre">cms/media/</span></tt></p>
+</div>
+<div class="section" id="cms-media-root">
+<span id="std:setting-CMS_MEDIA_ROOT"></span><h3>5.5.2. CMS_MEDIA_ROOT<a class="headerlink" href="#cms-media-root" title="Permalink to this headline">¶</a></h3>
+<p>Default: <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MEDIA_ROOT" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a> + <a class="reference internal" href="#std:setting-CMS_MEDIA_PATH"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_MEDIA_PATH</span></tt></a></p>
+<p>The path to the media root of the cms media files.</p>
+</div>
+<div class="section" id="cms-media-url">
+<span id="std:setting-CMS_MEDIA_URL"></span><h3>5.5.3. CMS_MEDIA_URL<a class="headerlink" href="#cms-media-url" title="Permalink to this headline">¶</a></h3>
+<p>default: <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MEDIA_URL" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MEDIA_URL</span></tt></a> + <a class="reference internal" href="#std:setting-CMS_MEDIA_PATH"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_MEDIA_PATH</span></tt></a></p>
+<p>The location of the media files that are located in <tt class="docutils literal"><span class="pre">cms/media/cms/</span></tt></p>
+</div>
+<div class="section" id="cms-page-media-path">
+<span id="std:setting-CMS_PAGE_MEDIA_PATH"></span><h3>5.5.4. CMS_PAGE_MEDIA_PATH<a class="headerlink" href="#cms-page-media-path" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">'cms_page_media/'</span></tt></p>
+<p>By default, django CMS creates a folder called <tt class="docutils literal"><span class="pre">cms_page_media</span></tt> in your
+static files folder where all uploaded media files are stored. The media files
+are stored in subfolders numbered with the id of the page.</p>
+<p>You should take care that the directory to which it points is writable by the
+user under which Django will be running.</p>
+</div>
+</div>
+<div class="section" id="urls">
+<h2>5.6. URLs<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-url-overwrite">
+<span id="std:setting-CMS_URL_OVERWRITE"></span><h3>5.6.1. CMS_URL_OVERWRITE<a class="headerlink" href="#cms-url-overwrite" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">True</span></tt></p>
+<p>This adds a new field &#8220;url overwrite&#8221; to the &#8220;advanced settings&#8221; tab of your
+page. With this field you can overwrite the whole relative url of the page.</p>
+</div>
+<div class="section" id="cms-menu-title-overwrite">
+<span id="std:setting-CMS_MENU_TITLE_OVERWRITE"></span><h3>5.6.2. CMS_MENU_TITLE_OVERWRITE<a class="headerlink" href="#cms-menu-title-overwrite" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt></p>
+<p>This adds a new &#8220;menu title&#8221; field beside the title field.</p>
+<p>With this field you can overwrite the title that is displayed in the menu.</p>
+<p>To access the menu title in the template, use:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">page.get_menu_title</span> <span class="cp">}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cms-redirects">
+<span id="std:setting-CMS_REDIRECTS"></span><h3>5.6.3. CMS_REDIRECTS<a class="headerlink" href="#cms-redirects" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt></p>
+<p>This adds a new &#8220;redirect&#8221; field to the &#8220;advanced settings&#8221; tab of the page</p>
+<p>You can set a url here, which a visitor will be redirected to when the page is
+accessed.</p>
+<p>Note: Don&#8217;t use this too much. <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/contrib/redirects.html#django.contrib.redirects" title="(in Django v1.3)"><tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.redirects</span></tt></a> is much more
+flexible, handy, and is designed exactly for this purpose.</p>
+</div>
+<div class="section" id="cms-flat-urls">
+<span id="std:setting-CMS_FLAT_URLS"></span><h3>5.6.4. CMS_FLAT_URLS<a class="headerlink" href="#cms-flat-urls" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt></p>
+<p>If this is enabled the slugs are not nested in the urls.</p>
+<p>So a page with a &#8220;world&#8221; slug will have a &#8220;/world&#8221; url, even it is a child of
+the &#8220;hello&#8221; page. If disabled the page would have the url: &#8220;/hello/world/&#8221;</p>
+</div>
+<div class="section" id="cms-softroot">
+<span id="std:setting-CMS_SOFTROOT"></span><h3>5.6.5. CMS_SOFTROOT<a class="headerlink" href="#cms-softroot" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt></p>
+<p>This adds a new &#8220;softroot&#8221; field to the &#8220;advanced settings&#8221; tab of the page. If
+a page is marked as softroot the menu will only display items until it finds
+the softroot.</p>
+<p>If you have a huge site you can easily partition the menu with this.</p>
+</div>
+</div>
+<div class="section" id="advanced-settings">
+<h2>5.7. Advanced Settings<a class="headerlink" href="#advanced-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-permission">
+<span id="std:setting-CMS_PERMISSION"></span><h3>5.7.1. CMS_PERMISSION<a class="headerlink" href="#cms-permission" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt></p>
+<p>If this is enabled you get 3 new models in Admin:</p>
+<ul class="simple">
+<li>Pages global permissions</li>
+<li>User groups - page</li>
+<li>Users - page</li>
+</ul>
+<p>In the edit-view of the pages you can now assign users to pages and grant them
+permissions. In the global permissions you can set the permissions for users
+globally.</p>
+<p>If a user has the right to create new users he can now do so in the &#8220;Users -
+page&#8221;. But he will only see the users he created. The users he created can also
+only inherit the rights he has. So if he only has been granted the right to edit
+a certain page all users he creates can, in turn, only edit this page. Naturally
+he can limit the rights of the users he creates even further, allowing them to see
+only a subset of the pages he&#8217;s allowed access to, for example.</p>
+</div>
+<div class="section" id="cms-public-for">
+<span id="std:setting-CMS_PUBLIC_FOR"></span><h3>5.7.2. CMS_PUBLIC_FOR<a class="headerlink" href="#cms-public-for" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">all</span></tt></p>
+<p>Decides if pages without any view restrictions are public by default, or staff
+only. Possible values are <tt class="docutils literal"><span class="pre">all</span></tt> and <tt class="docutils literal"><span class="pre">staff</span></tt>.</p>
+</div>
+<div class="section" id="cms-moderator">
+<span id="std:setting-CMS_MODERATOR"></span><h3>5.7.3. CMS_MODERATOR<a class="headerlink" href="#cms-moderator" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt></p>
+<p>If set to true, gives you a new &#8220;moderation&#8221; column in the tree view.</p>
+<p>You can select to moderate pages or whole trees. If a page is under moderation
+you will receive an email if somebody changes a page and you will be asked to
+approve the changes. Only after you approved the changes will they be updated
+on the &#8220;live&#8221; site. If you make changes to a page you moderate yourself, you
+will need to approve it anyway. This allows you to change a lot of pages for
+a new version of the site, for example, and go live with all the changes at the
+same time.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When switching this value to <tt class="xref docutils literal"><span class="pre">True</span></tt> on an existing site, you have
+to run the <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">moderator</span> <span class="pre">on</span></tt> command to make the required database
+changes.</p>
+</div>
+<span class="target" id="std:setting-CMS_SHOW_START_DATE"></span></div>
+<div class="section" id="cms-show-start-date-cms-show-end-date">
+<span id="std:setting-CMS_SHOW_END_DATE"></span><h3>5.7.4. CMS_SHOW_START_DATE &amp; CMS_SHOW_END_DATE<a class="headerlink" href="#cms-show-start-date-cms-show-end-date" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt> for both</p>
+<p>This adds two new <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/models/fields.html#django.db.models.DateTimeField" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">DateTimeField</span></tt></a> fields in the
+&#8220;advanced settings&#8221; tab of the page. With this option you can limit the time a
+page is published.</p>
+</div>
+<div class="section" id="cms-seo-fields">
+<span id="std:setting-CMS_SEO_FIELDS"></span><h3>5.7.5. CMS_SEO_FIELDS<a class="headerlink" href="#cms-seo-fields" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="xref docutils literal"><span class="pre">False</span></tt></p>
+<p>This adds a new &#8220;SEO Fields&#8221; fieldset to the page admin. You can set the
+Page Title, Meta Keywords and Meta Description in there.</p>
+<p>To access these fields in the template use:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">cms_tags</span> <span class="cp">%}</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span><span class="cp">{%</span> <span class="k">page_attribute</span> <span class="nv">page_title</span> <span class="cp">%}</span><span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">page_attribute</span> <span class="nv">meta_description</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">page_attribute</span> <span class="nv">meta_keywords</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="nt">/&gt;</span>
+    ...
+    ...
+<span class="nt">&lt;/head&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cms-cache-durations">
+<span id="std:setting-CMS_CACHE_DURATIONS"></span><h3>5.7.6. CMS_CACHE_DURATIONS<a class="headerlink" href="#cms-cache-durations" title="Permalink to this headline">¶</a></h3>
+<p>This dictionary carries the various cache duration settings.</p>
+<div class="section" id="content">
+<h4>5.7.6.1. <tt class="docutils literal"><span class="pre">'content'</span></tt><a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h4>
+<p>Default: <tt class="docutils literal"><span class="pre">60</span></tt></p>
+<p>Cache expiration (in seconds) for <a class="reference internal" href="../advanced/templatetags.html#std:templatetag-show_placeholder"><tt class="xref std std-ttag docutils literal"><span class="pre">show_placeholder</span></tt></a> and <a class="reference internal" href="../advanced/templatetags.html#std:templatetag-page_url"><tt class="xref std std-ttag docutils literal"><span class="pre">page_url</span></tt></a>
+template tags.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This settings was previously called <tt class="xref std std-setting docutils literal"><span class="pre">CMS_CONTENT_CACHE_DURATION</span></tt></p>
+</div>
+</div>
+<div class="section" id="menus">
+<h4>5.7.6.2. <tt class="docutils literal"><span class="pre">'menus'</span></tt><a class="headerlink" href="#menus" title="Permalink to this headline">¶</a></h4>
+<p>Default: <tt class="docutils literal"><span class="pre">3600</span></tt></p>
+<p>Cache expiration (in seconds) for the menu tree.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This settings was previously called <tt class="xref std std-setting docutils literal"><span class="pre">MENU_CACHE_DURATION</span></tt></p>
+</div>
+</div>
+<div class="section" id="permissions">
+<h4>5.7.6.3. <tt class="docutils literal"><span class="pre">'permissions'</span></tt><a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h4>
+<p>Default: <tt class="docutils literal"><span class="pre">3600</span></tt></p>
+<p>Cache expiration (in seconds) for view and other permissions.</p>
+</div>
+</div>
+<div class="section" id="cms-cache-prefix">
+<span id="std:setting-CMS_CACHE_PREFIX"></span><h3>5.7.7. CMS_CACHE_PREFIX<a class="headerlink" href="#cms-cache-prefix" title="Permalink to this headline">¶</a></h3>
+<p>Default: <tt class="docutils literal"><span class="pre">cms-</span></tt></p>
+<p>The CMS will prepend the value associated with this key to every cache access (set and get).
+This is useful when you have several django CMS installations, and you don&#8217;t want them
+to share cache objects.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_CACHE_PREFIX</span> <span class="o">=</span> <span class="s">&#39;mysite-live&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Django 1.3 introduced a site-wide cache key prefix. See Django&#8217;s own docs on
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/topics/cache.html#cache-key-prefixing" title="(in Django v1.3)"><em class="xref std std-ref">cache key prefixing</em></a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">5. Configuration</a><ul>
+<li><a class="reference internal" href="#required-settings">5.1. Required Settings</a><ul>
+<li><a class="reference internal" href="#cms-templates">5.1.1. CMS_TEMPLATES</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-customization">5.2. Basic Customization</a><ul>
+<li><a class="reference internal" href="#cms-template-inheritance">5.2.1. CMS_TEMPLATE_INHERITANCE</a></li>
+<li><a class="reference internal" href="#cms-placeholder-conf">5.2.2. CMS_PLACEHOLDER_CONF</a></li>
+<li><a class="reference internal" href="#cms-plugin-context-processors">5.2.3. CMS_PLUGIN_CONTEXT_PROCESSORS</a></li>
+<li><a class="reference internal" href="#cms-plugin-processors">5.2.4. CMS_PLUGIN_PROCESSORS</a></li>
+<li><a class="reference internal" href="#cms-apphooks">5.2.5. CMS_APPHOOKS</a></li>
+<li><a class="reference internal" href="#placeholder-frontend-editing">5.2.6. PLACEHOLDER_FRONTEND_EDITING</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#editor-configuration">5.3. Editor configuration</a></li>
+<li><a class="reference internal" href="#i18n-and-l10n">5.4. I18N and L10N</a><ul>
+<li><a class="reference internal" href="#cms-hide-untranslated">5.4.1. CMS_HIDE_UNTRANSLATED</a></li>
+<li><a class="reference internal" href="#cms-languages">5.4.2. CMS_LANGUAGES</a></li>
+<li><a class="reference internal" href="#cms-language-fallback">5.4.3. CMS_LANGUAGE_FALLBACK</a></li>
+<li><a class="reference internal" href="#cms-language-conf">5.4.4. CMS_LANGUAGE_CONF</a></li>
+<li><a class="reference internal" href="#cms-site-languages">5.4.5. CMS_SITE_LANGUAGES</a></li>
+<li><a class="reference internal" href="#cms-frontend-languages">5.4.6. CMS_FRONTEND_LANGUAGES</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#media-settings">5.5. Media Settings</a><ul>
+<li><a class="reference internal" href="#cms-media-path">5.5.1. CMS_MEDIA_PATH</a></li>
+<li><a class="reference internal" href="#cms-media-root">5.5.2. CMS_MEDIA_ROOT</a></li>
+<li><a class="reference internal" href="#cms-media-url">5.5.3. CMS_MEDIA_URL</a></li>
+<li><a class="reference internal" href="#cms-page-media-path">5.5.4. CMS_PAGE_MEDIA_PATH</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#urls">5.6. URLs</a><ul>
+<li><a class="reference internal" href="#cms-url-overwrite">5.6.1. CMS_URL_OVERWRITE</a></li>
+<li><a class="reference internal" href="#cms-menu-title-overwrite">5.6.2. CMS_MENU_TITLE_OVERWRITE</a></li>
+<li><a class="reference internal" href="#cms-redirects">5.6.3. CMS_REDIRECTS</a></li>
+<li><a class="reference internal" href="#cms-flat-urls">5.6.4. CMS_FLAT_URLS</a></li>
+<li><a class="reference internal" href="#cms-softroot">5.6.5. CMS_SOFTROOT</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-settings">5.7. Advanced Settings</a><ul>
+<li><a class="reference internal" href="#cms-permission">5.7.1. CMS_PERMISSION</a></li>
+<li><a class="reference internal" href="#cms-public-for">5.7.2. CMS_PUBLIC_FOR</a></li>
+<li><a class="reference internal" href="#cms-moderator">5.7.3. CMS_MODERATOR</a></li>
+<li><a class="reference internal" href="#cms-show-start-date-cms-show-end-date">5.7.4. CMS_SHOW_START_DATE &amp; CMS_SHOW_END_DATE</a></li>
+<li><a class="reference internal" href="#cms-seo-fields">5.7.5. CMS_SEO_FIELDS</a></li>
+<li><a class="reference internal" href="#cms-cache-durations">5.7.6. CMS_CACHE_DURATIONS</a><ul>
+<li><a class="reference internal" href="#content">5.7.6.1. <tt class="docutils literal"><span class="pre">'content'</span></tt></a></li>
+<li><a class="reference internal" href="#menus">5.7.6.2. <tt class="docutils literal"><span class="pre">'menus'</span></tt></a></li>
+<li><a class="reference internal" href="#permissions">5.7.6.3. <tt class="docutils literal"><span class="pre">'permissions'</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cms-cache-prefix">5.7.7. CMS_CACHE_PREFIX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="using_south.html"
+                                  title="previous chapter">4. Using South with django CMS</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="navigation.html"
+                                  title="next chapter">6. Navigation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/getting_started/configuration.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="navigation.html" title="6. Navigation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="using_south.html" title="4. Using South with django CMS"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

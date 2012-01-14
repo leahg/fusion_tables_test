@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Internationalization &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="2. Sitemap Guide" href="sitemap.html" />
+    <link rel="prev" title="7. Plugins reference" href="../getting_started/plugin_reference.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sitemap.html" title="2. Sitemap Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../getting_started/plugin_reference.html" title="7. Plugins reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="internationalization">
+<h1>1. Internationalization<a class="headerlink" href="#internationalization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="multilingual-url-middleware">
+<h2>1.1. Multilingual URL Middleware<a class="headerlink" href="#multilingual-url-middleware" title="Permalink to this headline">¶</a></h2>
+<p>The multilingual URL middleware adds a language prefix to every URL.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>/de/account/login/
+/fr/account/login/</pre>
+</div>
+<p>It also adds this prefix automatically to every <tt class="docutils literal"><span class="pre">href</span></tt> and <tt class="docutils literal"><span class="pre">form</span></tt> tag.
+To install it, include
+<tt class="docutils literal"><span class="pre">'cms.middleware.multilingual.MultilingualURLMiddleware'</span></tt> in your project&#8217;s
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MIDDLEWARE_CLASSES" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MIDDLEWARE_CLASSES</span></tt></a> setting.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This middleware must be put before <tt class="docutils literal"><span class="pre">cms.middleware.page.CurrentPageMiddleware</span></tt></p>
+<p>Example:</p>
+<div class="last highlight-python"><pre>MIDDLEWARE_CLASSES = (
+    ...
+    'cms.middleware.multilingual.MultilingualURLMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware'
+    ...
+)</pre>
+</div>
+</div>
+</div>
+<div class="section" id="language-chooser">
+<h2>1.2. Language Chooser<a class="headerlink" href="#language-chooser" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="templatetags.html#std:templatetag-language_chooser"><tt class="xref std std-ttag docutils literal"><span class="pre">language_chooser</span></tt></a> template tag will display a language chooser for the
+current page. You can modify the template in <tt class="docutils literal"><span class="pre">menu/language_chooser.html</span></tt> or
+provide your own template if necessary.</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">menu_tags</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">language_chooser</span> <span class="s2">&quot;myapp/language_chooser.html&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>If the current URL is not handled by the CMS and you have some i18n slugs in the
+URL you may use the <tt class="docutils literal"><span class="pre">set_language_changer</span></tt> function in the view that handles
+the current URL.</p>
+<p>In the models of the current object add an optional language parameter to the
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/models/instances.html#django.db.models.Model.get_absolute_url" title="(in Django v1.3)"><tt class="xref py py-meth docutils literal"><span class="pre">get_absolute_url()</span></tt></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">get_language</span>
+
+<span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">language</span><span class="p">:</span>
+        <span class="n">language</span> <span class="o">=</span> <span class="n">get_language</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&quot;product_view&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_slug</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>In the view pass the <tt class="xref py py-meth docutils literal"><span class="pre">get_absolute_url()</span></tt> method to the
+<tt class="docutils literal"><span class="pre">set_language_chooser</span></tt> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">menus.utils</span> <span class="kn">import</span> <span class="n">set_language_changer</span>
+
+<span class="k">def</span> <span class="nf">get_product</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">slug</span><span class="p">):</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Product</span><span class="p">,</span> <span class="n">slug</span><span class="o">=</span><span class="n">slug</span><span class="p">,</span> <span class="n">published</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">set_language_changer</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">get_absolute_url</span><span class="p">)</span>
+    <span class="c"># ...</span>
+</pre></div>
+</div>
+<p>This allows the language chooser to have another URL then the current one.
+If the current URL is not handled by the CMS and no <tt class="docutils literal"><span class="pre">set_language_changer</span></tt>
+function is provided it will take the exact same URL as the current one and
+will only change the language prefix.</p>
+<p>For the language chooser to work the
+<tt class="xref py py-class docutils literal"><span class="pre">cms.middleware.multilingual.MultilingualURLMiddleware</span></tt> must be enabled.</p>
+<div class="section" id="simple-language-changer">
+<h3>1.2.1. simple_language_changer<a class="headerlink" href="#simple-language-changer" title="Permalink to this headline">¶</a></h3>
+<p>If the URLs of your views don&#8217;t actually change besides the language prefix,
+you can use the <tt class="xref py py-func docutils literal"><span class="pre">menus.utils.simple_language_changer()</span></tt> view decorator,
+instead of manually using <cite>set_language_changer</cite>:</p>
+<div class="highlight-python"><pre>from menus.utils import simple_language_changer
+
+@simple_language_changer
+def get_prodcut(request, slug):
+    # ...</pre>
+</div>
+</div>
+</div>
+<div class="section" id="page-language-url">
+<h2>1.3. page_language_url<a class="headerlink" href="#page-language-url" title="Permalink to this headline">¶</a></h2>
+<p>This template tag returns the URL of the current page in another language.</p>
+<p>Example:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">page_language_url</span> <span class="s2">&quot;de&quot;</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cms-hide-untranslated">
+<h2>1.4. CMS_HIDE_UNTRANSLATED<a class="headerlink" href="#cms-hide-untranslated" title="Permalink to this headline">¶</a></h2>
+<p>If you put <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_HIDE_UNTRANSLATED"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_HIDE_UNTRANSLATED</span></tt></a> to <tt class="xref docutils literal"><span class="pre">False</span></tt> in your
+<tt class="docutils literal"><span class="pre">settings.py</span></tt> all pages will be displayed in all  languages even if they are
+not translated yet.</p>
+<p>If <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_HIDE_UNTRANSLATED"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_HIDE_UNTRANSLATED</span></tt></a>  is <tt class="xref docutils literal"><span class="pre">True</span></tt> is in your <tt class="docutils literal"><span class="pre">settings.py</span></tt>
+and you are on a page that hasn&#8217;t got a english translation yet and you view the
+german version then the language chooser will redirect to <tt class="docutils literal"><span class="pre">/</span></tt>. The same goes
+for urls that are not handled by the cms and display a language chooser.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">1. Internationalization</a><ul>
+<li><a class="reference internal" href="#multilingual-url-middleware">1.1. Multilingual URL Middleware</a></li>
+<li><a class="reference internal" href="#language-chooser">1.2. Language Chooser</a><ul>
+<li><a class="reference internal" href="#simple-language-changer">1.2.1. simple_language_changer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#page-language-url">1.3. page_language_url</a></li>
+<li><a class="reference internal" href="#cms-hide-untranslated">1.4. CMS_HIDE_UNTRANSLATED</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../getting_started/plugin_reference.html"
+                                  title="previous chapter">7. Plugins reference</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="sitemap.html"
+                                  title="next chapter">2. Sitemap Guide</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/advanced/i18n.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sitemap.html" title="2. Sitemap Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../getting_started/plugin_reference.html" title="7. Plugins reference"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

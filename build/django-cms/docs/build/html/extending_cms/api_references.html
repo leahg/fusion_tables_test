@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. API References &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="5. Placeholders outside the CMS" href="placeholders.html" />
+    <link rel="prev" title="3. App Integration" href="app_integration.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="placeholders.html" title="5. Placeholders outside the CMS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="app_integration.html" title="3. App Integration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="api-references">
+<h1>4. API References<a class="headerlink" href="#api-references" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cms-api">
+<h2>4.1. cms.api<a class="headerlink" href="#cms-api" title="Permalink to this headline">¶</a></h2>
+<p>Python APIs for creating CMS contents. This is done in <a class="reference internal" href="#module-cms.api" title="cms.api"><tt class="xref py py-mod docutils literal"><span class="pre">cms.api</span></tt></a> and not
+on the models and managers, because the direct API via models and managers is
+slightly counterintuitive for developers. Also the functions defined in this
+module do sanity checks on arguments.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">None of the functions in this modules do any security or permission
+checks. They verify their input values to be sane wherever
+possible, however permission checks should be implemented manually
+before calling any of these functions.</p>
+</div>
+<div class="section" id="module-cms.api">
+<span id="functions-and-constants"></span><h3>4.1.1. Functions and constants<a class="headerlink" href="#module-cms.api" title="Permalink to this headline">¶</a></h3>
+<dl class="data">
+<dt id="cms.api.VISIBILITY_ALL">
+<tt class="descclassname">cms.api.</tt><tt class="descname">VISIBILITY_ALL</tt><a class="headerlink" href="#cms.api.VISIBILITY_ALL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for the <tt class="docutils literal"><span class="pre">limit_menu_visibility</span></tt> keyword argument to
+<a class="reference internal" href="#cms.api.create_page" title="cms.api.create_page"><tt class="xref py py-func docutils literal"><span class="pre">create_page()</span></tt></a>. Does not limit menu visibility.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cms.api.VISIBILITY_USERS">
+<tt class="descclassname">cms.api.</tt><tt class="descname">VISIBILITY_USERS</tt><a class="headerlink" href="#cms.api.VISIBILITY_USERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for the <tt class="docutils literal"><span class="pre">limit_menu_visibility</span></tt> keyword argument to
+<a class="reference internal" href="#cms.api.create_page" title="cms.api.create_page"><tt class="xref py py-func docutils literal"><span class="pre">create_page()</span></tt></a>. Limits menu visibility to authenticated users.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cms.api.VISIBILITY_STAFF">
+<tt class="descclassname">cms.api.</tt><tt class="descname">VISIBILITY_STAFF</tt><a class="headerlink" href="#cms.api.VISIBILITY_STAFF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for the <tt class="docutils literal"><span class="pre">limit_menu_visibility</span></tt> keyword argument to
+<a class="reference internal" href="#cms.api.create_page" title="cms.api.create_page"><tt class="xref py py-func docutils literal"><span class="pre">create_page()</span></tt></a>. Limits menu visibility to staff users.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cms.api.create_page">
+<tt class="descclassname">cms.api.</tt><tt class="descname">create_page</tt><big>(</big><em>title</em>, <em>template</em>, <em>language</em>, <em>menu_title=None</em>, <em>slug=None</em>, <em>apphook=None</em>, <em>redirect=None</em>, <em>meta_description=None</em>, <em>meta_keywords=None</em>, <em>created_by='python-api'</em>, <em>parent=None</em>, <em>publication_date=None</em>, <em>publication_end_date=None</em>, <em>in_navigation=False</em>, <em>soft_root=False</em>, <em>reverse_id=None</em>, <em>navigation_extenders=None</em>, <em>published=False</em>, <em>site=None</em>, <em>login_required=False</em>, <em>limit_visibility_in_menu=VISIBILITY_ALL</em>, <em>position=&quot;last-child&quot;</em><big>)</big><a class="headerlink" href="#cms.api.create_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt> instance and returns it. Also
+creates a <tt class="xref py py-class docutils literal"><span class="pre">cms.models.titlemodel.Title</span></tt> instance for the specified
+language.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>title</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Title of the page</li>
+<li><strong>template</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Template to use for this page. Must be in <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_TEMPLATES"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_TEMPLATES</span></tt></a></li>
+<li><strong>language</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Language code for this page. Must be in <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-LANGUAGES" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">LANGUAGES</span></tt></a></li>
+<li><strong>menu_title</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Menu title for this page</li>
+<li><strong>slug</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Slug for the page, by default uses a slugified version of <em>title</em></li>
+<li><strong>apphook</strong> (string or <tt class="xref py py-class docutils literal"><span class="pre">cms.app_base.CMSApp</span></tt> subclass) &#8211; Application to hook on this page, must be a valid apphook</li>
+<li><strong>redirect</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; URL redirect (only applicable if <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_REDIRECTS"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_REDIRECTS</span></tt></a> is <tt class="xref docutils literal"><span class="pre">True</span></tt>)</li>
+<li><strong>meta_description</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Description of this page for SEO</li>
+<li><strong>meta_keywords</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Keywords for this page for SEO</li>
+<li><strong>created_by</strong> (string of <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/topics/auth.html#django.contrib.auth.models.User" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt></a> instance) &#8211; User that creates this page</li>
+<li><strong>parent</strong> (<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt> instance) &#8211; Parent page of this page</li>
+<li><strong>publication_date</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/datetime.html#module-datetime" title="(in Python v2.6)"><em>datetime</em></a>) &#8211; Date to publish this page</li>
+<li><strong>publication_end_date</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/datetime.html#module-datetime" title="(in Python v2.6)"><em>datetime</em></a>) &#8211; Date to unpublish this page</li>
+<li><strong>in_navigation</strong> (<em>boolean</em>) &#8211; Whether this page should be in the navigation or not</li>
+<li><strong>soft_root</strong> (<em>boolean</em>) &#8211; Whether this page is a softroot or not</li>
+<li><strong>reverse_id</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Reverse ID of this page (for template tags)</li>
+<li><strong>navigation_extenders</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Menu to attach to this page, must be a valid menu</li>
+<li><strong>published</strong> (<em>boolean</em>) &#8211; Whether this page should be published or not</li>
+<li><strong>site</strong> (<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/contrib/sites.html#django.contrib.sites.models.Site" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.contrib.sites.models.Site</span></tt></a> instance) &#8211; Site to put this page on</li>
+<li><strong>login_required</strong> (<em>boolean</em>) &#8211; Whether users must be logged in or not to view this page</li>
+<li><strong>limit_menu_visibility</strong> (<a class="reference internal" href="#cms.api.VISIBILITY_ALL" title="cms.api.VISIBILITY_ALL"><tt class="xref py py-data docutils literal"><span class="pre">VISIBILITY_ALL</span></tt></a> or <a class="reference internal" href="#cms.api.VISIBILITY_USERS" title="cms.api.VISIBILITY_USERS"><tt class="xref py py-data docutils literal"><span class="pre">VISIBILITY_USERS</span></tt></a> or <a class="reference internal" href="#cms.api.VISIBILITY_STAFF" title="cms.api.VISIBILITY_STAFF"><tt class="xref py py-data docutils literal"><span class="pre">VISIBILITY_STAFF</span></tt></a>) &#8211; Limits visibility of this page in the menu</li>
+<li><strong>position</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Where to insert this node if <em>parent</em> is given, must be <tt class="docutils literal"><span class="pre">'first-child'</span></tt> or <tt class="docutils literal"><span class="pre">'last-child'</span></tt></li>
+<li><strong>overwrite_url</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Overwritten path for this page</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cms.api.create_title">
+<tt class="descclassname">cms.api.</tt><tt class="descname">create_title</tt><big>(</big><em>language</em>, <em>title</em>, <em>page</em>, <em>menu_title=None</em>, <em>slug=None</em>, <em>apphook=None</em>, <em>redirect=None</em>, <em>meta_description=None</em>, <em>meta_keywords=None</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#cms.api.create_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <tt class="xref py py-class docutils literal"><span class="pre">cms.models.titlemodel.Title</span></tt> instance and returns it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>language</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Language code for this page. Must be in <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-LANGUAGES" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">LANGUAGES</span></tt></a></li>
+<li><strong>title</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Title of the page</li>
+<li><strong>page</strong> (<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt> instance) &#8211; The page for which to create this title</li>
+<li><strong>menu_title</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Menu title for this page</li>
+<li><strong>slug</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Slug for the page, by default uses a slugified version of <em>title</em></li>
+<li><strong>apphook</strong> (string or <tt class="xref py py-class docutils literal"><span class="pre">cms.app_base.CMSApp</span></tt> subclass) &#8211; Application to hook on this page, must be a valid apphook</li>
+<li><strong>redirect</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; URL redirect (only applicable if <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_REDIRECTS"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_REDIRECTS</span></tt></a> is <tt class="xref docutils literal"><span class="pre">True</span></tt>)</li>
+<li><strong>meta_description</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Description of this page for SEO</li>
+<li><strong>meta_keywords</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Keywords for this page for SEO</li>
+<li><strong>parent</strong> (<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt> instance) &#8211; Used for automated slug generation</li>
+<li><strong>overwrite_url</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Overwritten path for this page</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cms.api.add_plugin">
+<tt class="descclassname">cms.api.</tt><tt class="descname">add_plugin</tt><big>(</big><em>placeholder</em>, <em>plugin_type</em>, <em>language</em>, <em>position='last-child'</em>, <em>**data</em><big>)</big><a class="headerlink" href="#cms.api.add_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a plugin to a placeholder and returns it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>placeholder</strong> (<tt class="xref py py-class docutils literal"><span class="pre">cms.models.placeholdermodel.Placeholder</span></tt> instance) &#8211; Placeholder to add the plugin to</li>
+<li><strong>plugin_type</strong> (string or <a class="reference internal" href="#cms.plugin_base.CMSPluginBase" title="cms.plugin_base.CMSPluginBase"><tt class="xref py py-class docutils literal"><span class="pre">cms.plugin_base.CMSPluginBase</span></tt></a> subclass, must be a valid plugin) &#8211; What type of plugin to add</li>
+<li><strong>language</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Language code for this plugin, must be in <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-LANGUAGES" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">LANGUAGES</span></tt></a></li>
+<li><strong>position</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; Position to add this plugin to the placeholder, must be a valid django-mptt position</li>
+<li><strong>data</strong> (<em>kwargs</em>) &#8211; Data for the plugin type instance</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cms.api.create_page_user">
+<tt class="descclassname">cms.api.</tt><tt class="descname">create_page_user</tt><big>(</big><em>created_by</em>, <em>user</em>, <em>can_add_page=True</em>, <em>can_change_page=True</em>, <em>can_delete_page=True</em>, <em>can_recover_page=True</em>, <em>can_add_pageuser=True</em>, <em>can_change_pageuser=True</em>, <em>can_delete_pageuser=True</em>, <em>can_add_pagepermission=True</em>, <em>can_change_pagepermission=True</em>, <em>can_delete_pagepermission=True</em>, <em>grant_all=False</em><big>)</big><a class="headerlink" href="#cms.api.create_page_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a page user for the user provided and returns that page user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>created_by</strong> (<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/topics/auth.html#django.contrib.auth.models.User" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt></a> instance) &#8211; The user that creates the page user</li>
+<li><strong>user</strong> (<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/topics/auth.html#django.contrib.auth.models.User" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt></a> instance) &#8211; The user to create the page user from</li>
+<li><strong>can_*</strong> (<em>boolean</em>) &#8211; Permissions to give the user</li>
+<li><strong>grant_all</strong> (<em>boolean</em>) &#8211; Grant all permissions to the user</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cms.api.assign_user_to_page">
+<tt class="descclassname">cms.api.</tt><tt class="descname">assign_user_to_page</tt><big>(</big><em>page</em>, <em>user</em>, <em>grant_on=ACCESS_PAGE_AND_DESCENDANTS</em>, <em>can_add=False</em>, <em>can_change=False</em>, <em>can_delete=False</em>, <em>can_change_advanced_settings=False</em>, <em>can_publish=False</em>, <em>can_change_permissions=False</em>, <em>can_move_page=False</em>, <em>can_moderate=False</em>, <em>grant_all=False</em><big>)</big><a class="headerlink" href="#cms.api.assign_user_to_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns a user to a page and gives them some permissions. Returns the
+<tt class="xref py py-class docutils literal"><span class="pre">cms.models.permissionmodels.PagePermission</span></tt> object that gets
+created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>page</strong> (<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt> instance) &#8211; The page to assign the user to</li>
+<li><strong>user</strong> (<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/topics/auth.html#django.contrib.auth.models.User" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt></a> instance) &#8211; The user to assign to the page</li>
+<li><strong>grant_on</strong> (<tt class="xref py py-data docutils literal"><span class="pre">cms.models.moderatormodels.ACCESS_PAGE</span></tt>, <tt class="xref py py-data docutils literal"><span class="pre">cms.models.moderatormodels.ACCESS_CHILDREN</span></tt>, <tt class="xref py py-data docutils literal"><span class="pre">cms.models.moderatormodels.ACCESS_DESCENDANTS</span></tt> or <tt class="xref py py-data docutils literal"><span class="pre">cms.models.moderatormodels.ACCESS_PAGE_AND_DESCENDANTS</span></tt>) &#8211; Controls which pages are affected</li>
+<li><strong>can_*</strong> &#8211; Permissions to grant</li>
+<li><strong>grant_all</strong> (<em>boolean</em>) &#8211; Grant all permissions to the user</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cms.api.publish_page">
+<tt class="descclassname">cms.api.</tt><tt class="descname">publish_page</tt><big>(</big><em>page</em>, <em>user</em>, <em>approve=False</em><big>)</big><a class="headerlink" href="#cms.api.publish_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Publishes a page and optionally approves that publication.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>page</strong> (<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt> instance) &#8211; The page to publish</li>
+<li><strong>user</strong> (<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/topics/auth.html#django.contrib.auth.models.User" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt></a> instance) &#8211; The user that performs this action</li>
+<li><strong>approve</strong> (<em>boolean</em>) &#8211; Whether to approve the publication or not</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="cms.api.approve_page">
+<tt class="descclassname">cms.api.</tt><tt class="descname">approve_page</tt><big>(</big><em>page</em>, <em>user</em><big>)</big><a class="headerlink" href="#cms.api.approve_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Approves a page.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>page</strong> (<tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt> instance) &#8211; The page to approve</li>
+<li><strong>user</strong> (<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/topics/auth.html#django.contrib.auth.models.User" title="(in Django v1.3)"><tt class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt></a> instance) &#8211; The user that performs this action</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="example-workflows">
+<h3>4.1.2. Example workflows<a class="headerlink" href="#example-workflows" title="Permalink to this headline">¶</a></h3>
+<p>Create a page called <tt class="docutils literal"><span class="pre">'My</span> <span class="pre">Page</span></tt> using the template <tt class="docutils literal"><span class="pre">'my_template.html'</span></tt> and
+add a text plugin with the content <tt class="docutils literal"><span class="pre">'hello</span> <span class="pre">world'</span></tt>. This is done in English:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cms.api</span> <span class="kn">import</span> <span class="n">create_page</span><span class="p">,</span> <span class="n">add_plugin</span>
+
+<span class="n">page</span> <span class="o">=</span> <span class="n">create_page</span><span class="p">(</span><span class="s">&#39;My Page&#39;</span><span class="p">,</span> <span class="s">&#39;my_template.html&#39;</span><span class="p">,</span> <span class="s">&#39;en&#39;</span><span class="p">)</span>
+<span class="n">placeholder</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="s">&#39;body&#39;</span><span class="p">)</span>
+<span class="n">add_plugin</span><span class="p">(</span><span class="n">placeholder</span><span class="p">,</span> <span class="s">&#39;TextPlugin&#39;</span><span class="p">,</span> <span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s">&#39;hello world&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="module-cms.plugin_base">
+<span id="cms-plugin-base"></span><h2>4.2. cms.plugin_base<a class="headerlink" href="#module-cms.plugin_base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cms.plugin_base.CMSPluginBase">
+<em class="property">class </em><tt class="descclassname">cms.plugin_base.</tt><tt class="descname">CMSPluginBase</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <tt class="docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></tt>.</p>
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.admin_preview">
+<tt class="descname">admin_preview</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.admin_preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defaults to <tt class="xref docutils literal"><span class="pre">True</span></tt>, if <tt class="xref docutils literal"><span class="pre">False</span></tt> no preview is done in the admin.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.change_form_template">
+<tt class="descname">change_form_template</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.change_form_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom template to use to render the form to edit this plugin.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.form">
+<tt class="descname">form</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom form class to be used to edit this plugin.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.model">
+<tt class="descname">model</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the <tt class="xref py py-class docutils literal"><span class="pre">CMSPlugin</span></tt> model we created earlier. If you don&#8217;t need
+model because you just want to display some template logic, use
+<tt class="xref py py-class docutils literal"><span class="pre">CMSPlugin</span></tt> from <tt class="xref py py-mod docutils literal"><span class="pre">cms.models</span></tt> as the model instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.module">
+<tt class="descname">module</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will be group the plugin in the plugin editor. If module is <tt class="xref docutils literal"><span class="pre">None</span></tt>,
+plugin is grouped &#8220;Generic&#8221; group.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.name">
+<tt class="descname">name</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will be displayed in the plugin editor.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.render_plugin">
+<tt class="descname">render_plugin</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.render_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set to <tt class="xref docutils literal"><span class="pre">False</span></tt>, this plugin will not be rendered at all.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.render_template">
+<tt class="descname">render_template</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.render_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will be rendered with the context returned by the render function.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cms.plugin_base.CMSPluginBase.text_enabled">
+<tt class="descname">text_enabled</tt><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.text_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this plugin can be used in text plugins or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cms.plugin_base.CMSPluginBase.icon_alt">
+<tt class="descname">icon_alt</tt><big>(</big><em>instance</em><big>)</big><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.icon_alt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the alt text for the icon used in text plugins, see
+<a class="reference internal" href="#cms.plugin_base.CMSPluginBase.icon_src" title="cms.plugin_base.CMSPluginBase.icon_src"><tt class="xref py py-meth docutils literal"><span class="pre">icon_src()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cms.plugin_base.CMSPluginBase.icon_src">
+<tt class="descname">icon_src</tt><big>(</big><em>instance</em><big>)</big><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.icon_src" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the url to the icon to be used for the given instance when that
+instance is used inside a text plugin.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cms.plugin_base.CMSPluginBase.render">
+<tt class="descname">render</tt><big>(</big><em>context</em>, <em>instance</em>, <em>placeholder</em><big>)</big><a class="headerlink" href="#cms.plugin_base.CMSPluginBase.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the context to be used to render the template
+specified in <a class="reference internal" href="#cms.plugin_base.CMSPluginBase.render_template" title="cms.plugin_base.CMSPluginBase.render_template"><tt class="xref py py-attr docutils literal"><span class="pre">render_template</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>context</strong> &#8211; Current template context.</li>
+<li><strong>instance</strong> &#8211; Plugin instance that is being rendered.</li>
+<li><strong>placeholder</strong> &#8211; Name of the placeholder the plugin is in.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">dict</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-menus.base">
+<span id="menus-base"></span><h2>4.3. menus.base<a class="headerlink" href="#module-menus.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="menus.base.NavigationNode">
+<em class="property">class </em><tt class="descclassname">menus.base.</tt><tt class="descname">NavigationNode</tt><big>(</big><em>title, url, id[, parent_id=None][, parent_namespace=None][, attr=None][, visible=True]</em><big>)</big><a class="headerlink" href="#menus.base.NavigationNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A navigation node in a menu tree.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>title</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; The title to display this menu item with.</li>
+<li><strong>url</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/string.html#module-string" title="(in Python v2.6)"><em>string</em></a>) &#8211; The URL associated with this menu item.</li>
+<li><strong>id</strong> &#8211; Unique (for the current tree) ID of this item.</li>
+<li><strong>parent_id</strong> &#8211; Optional, ID of the parent item.</li>
+<li><strong>parent_namespace</strong> &#8211; Optional, namespace of the parent.</li>
+<li><strong>attr</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/stdtypes.html#dict" title="(in Python v2.6)"><em>dict</em></a>) &#8211; Optional, dictionary of additional information to store on
+this node.</li>
+<li><strong>visible</strong> (<a class="reference external" href="http://docs.python.org/2.6/library/functions.html#bool" title="(in Python v2.6)"><em>bool</em></a>) &#8211; Optional, defaults to <tt class="xref docutils literal"><span class="pre">True</span></tt>, whether this item is
+visible or not.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="menus.base.NavigationNode.get_descendants">
+<tt class="descname">get_descendants</tt><big>(</big><big>)</big><a class="headerlink" href="#menus.base.NavigationNode.get_descendants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all children beneath the current menu item.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="menus.base.NavigationNode.get_ancestors">
+<tt class="descname">get_ancestors</tt><big>(</big><big>)</big><a class="headerlink" href="#menus.base.NavigationNode.get_ancestors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all parent items, excluding the current menu item.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="menus.base.NavigationNode.get_absolute_url">
+<tt class="descname">get_absolute_url</tt><big>(</big><big>)</big><a class="headerlink" href="#menus.base.NavigationNode.get_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility method to return the URL associated with this menu item,
+primarily to follow naming convention asserted by Django.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="menus.base.NavigationNode.get_menu_title">
+<tt class="descname">get_menu_title</tt><big>(</big><big>)</big><a class="headerlink" href="#menus.base.NavigationNode.get_menu_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility method to return the associated title, using the same naming
+convention used by <tt class="xref py py-class docutils literal"><span class="pre">cms.models.pagemodel.Page</span></tt>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">4. API References</a><ul>
+<li><a class="reference internal" href="#cms-api">4.1. cms.api</a><ul>
+<li><a class="reference internal" href="#module-cms.api">4.1.1. Functions and constants</a></li>
+<li><a class="reference internal" href="#example-workflows">4.1.2. Example workflows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-cms.plugin_base">4.2. cms.plugin_base</a></li>
+<li><a class="reference internal" href="#module-menus.base">4.3. menus.base</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="app_integration.html"
+                                  title="previous chapter">3. App Integration</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="placeholders.html"
+                                  title="next chapter">5. Placeholders outside the CMS</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/extending_cms/api_references.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="placeholders.html" title="5. Placeholders outside the CMS"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="app_integration.html" title="3. App Integration"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

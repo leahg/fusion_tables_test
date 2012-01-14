@@ -14,14 +14,13 @@
   var $mapCanvas;
   var $sidebar = $('#sidebar');
   var $typecontrols = $('.field-settype');
-  var some_layer;
   var info_window;
   var query = "";
   var info = null;
   var Marker_TableID = '2441665';
   var mrkr_array = [];
   var gmarkers = [];
-  var global_suppressInfoWindows = false;
+  var global_suppressInfoWindows = true;
   var sidebarEnabled = true;
   var descCharLimit = 40;
 
@@ -34,58 +33,87 @@
   // == mapstyle =================================== //
 
   var alexMapStyle = [
-      {
-          featureType: "water",
-          elementType: "geometry",
-          stylers: [
-            { hue: "#1100ff" },
-            { lightness: -94 } ]
-      },
-      {
-          elementType: "labels",
-          stylers: [
-              { saturation: -100 } ]
-      },
-      {
-          featureType: "landscape",
-          elementType: "geometry",
-          stylers: [
-            { hue: "#ffdd00" },
-            { saturation: 79 },
-            { gamma: 1.72 },
-            { lightness: -71} ]
-      },
-      {
-        featureType: "road",
-        stylers: [
-            { hue: "#00ff6f" },
-            { saturation: -100 },
-            { lightness: 100 }
-          ]
-      },
-      {
-        featureType: "poi",
-        stylers: [
-          { hue: "#00ff4d" },
-          { saturation: -95 },
-          { lightness: 57 } ]
-      }
-    
+    {
+      featureType: "landscape.natural",
+      stylers: [
+        { hue: "#ffcc00" },
+        { saturation: 68 },
+        { gamma: 0.48 },
+        { lightness: 32 }
+      ]
+    },{
+    },{
+      featureType: "road.local",
+      elementType: "geometry",
+      stylers: [
+        { hue: "#ffdd00" },
+        { gamma: 0.65 },
+        { saturation: 39 },
+        { lightness: -15 }
+      ]
+    },{
+    },{
+      featureType: "road.arterial",
+      elementType: "geometry",
+      stylers: [
+        { hue: "#ffdd00" },
+        { gamma: 0.41 },
+        { saturation: -35 },
+        { lightness: 34 }
+      ]
+    },{
+      featureType: "road.highway",
+      stylers: [
+        { hue: "#ffdd00" },
+        { gamma: 0.66 },
+        { lightness: 1 },
+        { saturation: -39 }
+      ]
+    },{
+      featureType: "landscape.man_made",
+      elementType: "geometry",
+      stylers: [
+        { hue: "#ffc300" },
+        { saturation: 55 },
+        { lightness: -43 }
+      ]
+    },{
+      featureType: "poi",
+      elementType: "geometry",
+      stylers: [
+        { hue: "#ffc300" },
+        { lightness: -55 },
+        { saturation: 75 }
+      ]
+    },{
+      featureType: "transit",
+      elementType: "labels",
+      stylers: [
+        { hue: "#ff4d00" }
+      ]
+    },{
+      featureType: "water",
+      stylers: [
+        { hue: "#0000ff" },
+        { saturation: -95 },
+        { lightness: -8 }
+      ]
+     }
   ];
 
 
   // == MAP SETTINGS =================================== //
 
   //var latlng = new google.maps.LatLng(31.22, 29.85);
-  var latlng = new google.maps.LatLng(31.292212, 29.94237);
+  var latlng = new google.maps.LatLng(31.241572, 29.982376);
   var defaults = {
     center: latlng,
-    zoom: 12,
+    zoom: 11,
     streetViewControl: false,
-    mapTypeControl: true,
+    mapTypeControl: false,
     zoomControl: true,
     zoomControlOptions:{
-        style: google.maps.ZoomControlStyle.DEFAULT,
+        style: google.maps.ZoomControlStyle.SMALL,
         position: google.maps.ControlPosition.LEFT_CENTER
     },
     scaleControl: false,
@@ -93,7 +121,6 @@
     styles: alexMapStyle,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-
 
   // == DEFAULT QUERY =================================== //
 
@@ -202,7 +229,8 @@
       for (var i = 0; i < _row_count; i++) {
         type = _tbl.getValue(i, 0);
         if ( $this.find('input.'+type).length === 0 )
-          $this.append('<input type="checkbox" value="'+type+'" name="type" class="checkbox '+type+' active" id="type-'+type+'" checked="checked" /><label for="type-'+type+'" class="active">'+type+'</label>');
+          $this.append('<input type="checkbox" value="'+type+'" name="type" class="checkbox '+type+' active" id="type-'+type+'" checked="checked" /> \
+          <label for="type-'+type+'" class="active">'+type+'</label>');
       }
     }
   });
@@ -249,6 +277,7 @@
           lat = pt.split(',')[0],
           lng = pt.split(',')[1];
       var latLng = new google.maps.LatLng(lat, lng);
+      // setting character limit
       desc = _tbl.getValue(i, 2).substr(0, descCharLimit) + " ...";
       type = _tbl.getValue(i, 3);
       var sidebarContent = "";
@@ -274,18 +303,20 @@
 
         if ( sidebarEnabled ) {
           
-          // add a tool tip window instead of just activate
-          $mapCanvas.gmap('addInfoWindow', { 'content': htmlInfoWindowContent }, function(iw) {
-            $(new_marker).click(function() {
-              iw.open(map, new_marker);
-              $('.tooltip-header').trigger('load_scaffolding');
-            });
+          $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
+            $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
           });
+          // add a tool tip window instead of just activate
+            $(new_marker).click(function(e) {
+              //iw.open(map, new_marker);
+              $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
+              //$('.tooltip-header').trigger('load_scaffolding');
+            });
 
         } else {
 
           // activate a tool tip window instead of add
-          $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function() {
+          $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
             $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
           });
 
@@ -301,7 +332,11 @@
 
     }
 
-    $this.find('.mod-type-selector .inner a').live('click.loadInfoWindow', function(e) {
+    /*
+      mod
+    */
+
+    $this.find('#sidebar .mod-type-selector .inner a').live('click.loadInfoWindow', function(e) {
       e.preventDefault();
       var $this = $(this),
           marker_id = parseInt($this.data("markerid")),
@@ -318,8 +353,10 @@
         if ( DEBUG ) {
           console.log(marker_id);
         }
+
         google.maps.event.trigger(gmarkers[marker_id], 'click');
-        $('.tooltip-header').trigger('load_scaffolding');
+
+        //$('.tooltip-header').trigger('load_scaffolding');
       }
       
     });
@@ -346,29 +383,6 @@
     // info_window 
 
     info_window = new google.maps.InfoWindow();
-
-    // == some layer
-    
-    // set layer
-    /*
-    some_layer = new google.maps.FusionTablesLayer({
-      query: {
-        select: 'Lat'
-        , from: Marker_TableID
-        //, where: 'Type LIKE "Eat"'
-      },
-      map: map,
-      styles: alexMapStyle,
-      clickable: true,
-      suppressInfoWindows: global_suppressInfoWindows
-    });
-    */
-
-    // add tooltip
-    //google.maps.event.addListener(some_layer, 'click', windowControl);
-
-    // set map to layer
-    //some_layer.setMap(map);
 
     query.send(getData);
     type_query.send(typeControlsData);

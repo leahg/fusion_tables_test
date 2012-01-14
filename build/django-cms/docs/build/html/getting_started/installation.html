@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Installation &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="2. Upgrading a django CMS installation" href="../upgrade/index.html" />
+    <link rel="prev" title="Welcome to django CMS’s documentation!" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../upgrade/index.html" title="2. Upgrading a django CMS installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to django CMS’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>1. Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>This document assumes you are familiar with Python and Django, and should
+outline the steps necessary for you to follow the <a class="reference internal" href="tutorial.html"><em>Introductory Tutorial</em></a>.</p>
+<div class="section" id="requirements">
+<h2>1.1. Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://www.python.org">Python</a> 2.5 (or a higher release of 2.x).</li>
+<li><a class="reference external" href="http://www.djangoproject.com">Django</a> 1.2.5 (or a 1.3.x release).</li>
+<li><a class="reference external" href="http://south.aeracode.org/">South</a> 0.7.2 or higher</li>
+<li><a class="reference external" href="http://www.pythonware.com/products/pil/">PIL</a> 1.1.6 or higher</li>
+<li><a class="reference external" href="https://github.com/ojii/django-classy-tags">django-classy-tags</a> 0.3.4.1 or higher</li>
+<li><a class="reference external" href="https://github.com/django-mptt/django-mptt">django-mptt</a> 0.4.2 or higher</li>
+<li><a class="reference external" href="https://github.com/ojii/django-sekizai">django-sekizai</a> 0.4.2 or higher</li>
+<li><a class="reference external" href="http://code.google.com/p/html5lib/">html5lib</a> 0.90 or higher</li>
+<li>An installed and working instance of one of the databases listed in the
+<a class="reference internal" href="#databases">Databases</a> section.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When installing the django CMS using pip, Django, django-mptt
+django-classy-tags, django-sekizai, south and html5lib will be
+installed automatically.</p>
+</div>
+<div class="section" id="recommended">
+<h3>1.1.1. Recommended<a class="headerlink" href="#recommended" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/stefanfoulis/django-filer">django-filer</a> with its <a class="reference external" href="https://github.com/stefanfoulis/cmsplugin-filer">django CMS plugins</a>, file and image management
+application to use instead of some core plugins</li>
+<li><a class="reference external" href="https://github.com/etianen/django-reversion">django-reversion</a> 1.4, to support versions of your content</li>
+</ul>
+</div>
+<div class="section" id="on-ubuntu">
+<h3>1.1.2. On Ubuntu<a class="headerlink" href="#on-ubuntu" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The instructions here install certain packages, such as PIL, Django, South
+and django CMS globally, which is not recommended. We recommend you use
+<a class="reference external" href="http://www.virtualenv.org/">virtualenv</a> to use instead. If you chose to do so, install Django,
+django CMS and South inside a virtualenv.</p>
+</div>
+<p>If you&#8217;re using Ubuntu (tested with 10.10), the following should get you
+started:</p>
+<div class="highlight-bash"><div class="highlight"><pre>sudo aptitude install python2.6 python-setuptools python-imaging
+sudo easy_install pip
+sudo pip install <span class="nv">Django</span><span class="o">==</span>1.3 django-cms south
+</pre></div>
+</div>
+<p>Additionally, you need the python driver for your selected database:</p>
+<div class="highlight-bash"><div class="highlight"><pre>sudo aptitude python-psycopg2
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-bash"><div class="highlight"><pre>sudo aptitude install python-mysql
+</pre></div>
+</div>
+<p>This will install PIL and your database&#8217;s driver globally.</p>
+<p>You have now everything that is needed for you to follow the <a class="reference internal" href="tutorial.html"><em>Introductory Tutorial</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This will install Django version 1.3 for use with the CMS. While
+later versions of Django (such as 1.4) are know to work for some
+people, it is NOT recommended and will not be supported until further
+notice (and tests)</p>
+</div>
+</div>
+<div class="section" id="on-mac-osx">
+<h3>1.1.3. On Mac OSX<a class="headerlink" href="#on-mac-osx" title="Permalink to this headline">¶</a></h3>
+<p><strong>TODO</strong> (Should setup everything up to but not including
+&#8220;pip install django-cms&#8221; like the above)</p>
+</div>
+<div class="section" id="on-microsoft-windows">
+<h3>1.1.4. On Microsoft Windows<a class="headerlink" href="#on-microsoft-windows" title="Permalink to this headline">¶</a></h3>
+<p><strong>TODO</strong>.</p>
+</div>
+</div>
+<div class="section" id="databases">
+<h2>1.2. Databases<a class="headerlink" href="#databases" title="Permalink to this headline">¶</a></h2>
+<p>We recommend using <a class="reference external" href="http://www.postgresql.org/">PostgreSQL</a> or <a class="reference external" href="http://www.mysql.com">MySQL</a> with django CMS. Installing and
+maintaining database systems is outside the scope of this documentation, but is
+very well documented on the system&#8217;s respective websites.</p>
+<p>To use django CMS efficiently, we recommend:</p>
+<ul class="simple">
+<li>Create a separate set of credentials for django CMS.</li>
+<li>Create a separate database for django CMS to use.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">1. Installation</a><ul>
+<li><a class="reference internal" href="#requirements">1.1. Requirements</a><ul>
+<li><a class="reference internal" href="#recommended">1.1.1. Recommended</a></li>
+<li><a class="reference internal" href="#on-ubuntu">1.1.2. On Ubuntu</a></li>
+<li><a class="reference internal" href="#on-mac-osx">1.1.3. On Mac OSX</a></li>
+<li><a class="reference internal" href="#on-microsoft-windows">1.1.4. On Microsoft Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#databases">1.2. Databases</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../index.html"
+                                  title="previous chapter">Welcome to django CMS&#8217;s documentation!</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../upgrade/index.html"
+                                  title="next chapter">2. Upgrading a django CMS installation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/getting_started/installation.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../upgrade/index.html" title="2. Upgrading a django CMS installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to django CMS’s documentation!"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

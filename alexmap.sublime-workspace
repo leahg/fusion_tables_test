@@ -7,6 +7,62 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "readme.markdown",
+			"settings":
+			{
+				"buffer_size": 319,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sophista/_themes/vanilla/_templates/test.html",
+			"settings":
+			{
+				"buffer_size": 3218,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sophista/settings.py",
+			"settings":
+			{
+				"buffer_size": 6229,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sophista/_themes/vanilla/_assets/css/compass/sass/teststyle.scss",
+			"settings":
+			{
+				"buffer_size": 5960,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sophista/_themes/vanilla/_assets/js/testscript.js",
+			"settings":
+			{
+				"buffer_size": 10798,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Threelayers/Threelayersscript.js",
+			"settings":
+			{
+				"buffer_size": 12384,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "sophista/_themes/vanilla/_assets/css/compass/stylesheets/teststyle.css",
+			"settings":
+			{
+				"buffer_size": 8194,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -32,6 +88,10 @@
 	},
 	"file_history":
 	[
+		"/Users/leahg/Library/Application Support/Sublime Text 2/Packages/Default/Base File.sublime-settings",
+		"/Users/leahg/Sites/alexmap/sophista/_themes/vanilla/_assets/css/compass/stylesheets/teststyle.css",
+		"/Users/leahg/Sites/alexmap/sophista/_themes/vanilla/_assets/css/compass/stylesheets/screen.css",
+		"/Users/leahg/Sites/alexmap/sophista/_themes/vanilla/_assets/css/compass/stylesheets/print.css",
 		"/Users/leahg/Sites/Threelayers/Threelayersscript.js",
 		"/Users/leahg/Sites/Threelayers/Threelayers.html",
 		"/Users/leahg/Sites/Threelayers/threelayersstyle.css",
@@ -57,6 +117,50 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"load_scaffolding",
+			"field",
+			"checkbox",
+			"settype",
+			"pixelOffset",
+			"setty",
+			"mod",
+			"htmlSidebarContent",
+			"sidebarEnabled",
+			"loadLayer",
+			"getData",
+			"map",
+			"mapCanvas",
+			"map",
+			"infoWindowHtml",
+			"map",
+			"iw",
+			"map",
+			"defaults",
+			"default",
+			"defaults",
+			"global_suppressInfoWindows",
+			"some_layer",
+			"load_scaffolding",
+			"tooltip",
+			"markerid",
+			"id",
+			"CharLimit",
+			"descCharLimit",
+			"loadLayer",
+			"typeControlsData",
+			"set",
+			"typecontrols",
+			"clear",
+			"Defau",
+			"maptypecont",
+			"typecont",
+			"field-settype",
+			"typeControls",
+			"typeControlsDat",
+			"typecontrolData",
+			"type_query",
+			"height",
+			"loadl",
 			"getda",
 			"marker",
 			"mar",
@@ -103,8 +207,203 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "readme.markdown",
+					"settings":
+					{
+						"buffer_size": 319,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								148,
+								148
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "sophista/_themes/vanilla/_templates/test.html",
+					"settings":
+					{
+						"buffer_size": 3218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								393,
+								393
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1714.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "sophista/settings.py",
+					"settings":
+					{
+						"buffer_size": 6229,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4777,
+								4777
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1787.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "sophista/_themes/vanilla/_assets/css/compass/sass/teststyle.scss",
+					"settings":
+					{
+						"buffer_size": 5960,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								50,
+								50
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SASS/Syntaxes/SASS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "sophista/_themes/vanilla/_assets/js/testscript.js",
+					"settings":
+					{
+						"buffer_size": 10798,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9603,
+								9603
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4515.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Threelayers/Threelayersscript.js",
+					"settings":
+					{
+						"buffer_size": 12384,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								891,
+								891
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2024.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "sophista/_themes/vanilla/_assets/css/compass/stylesheets/teststyle.css",
+					"settings":
+					{
+						"buffer_size": 8194,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4296,
+								4301
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1799.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

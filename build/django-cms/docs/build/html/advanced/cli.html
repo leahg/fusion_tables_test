@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Command Line Interface &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="1. Extending the CMS: Examples" href="../extending_cms/extending_examples.html" />
+    <link rel="prev" title="3. Template Tags" href="templatetags.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../extending_cms/extending_examples.html" title="1. Extending the CMS: Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="templatetags.html" title="3. Template Tags"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="command-line-interface">
+<h1>4. Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>You can invoke the django CMS command line interface using the <tt class="docutils literal"><span class="pre">cms</span></tt> Django
+command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>python manage.py cms
+</pre></div>
+</div>
+<div class="section" id="informational-commands">
+<h2>4.1. Informational commands<a class="headerlink" href="#informational-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-list">
+<span id="cms-list-command"></span><h3>4.1.1. <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">list</span></tt><a class="headerlink" href="#cms-list" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">list</span></tt> command is used to display information about your installation.</p>
+<p>It has two subcommands:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">cms</span> <span class="pre">list</span> <span class="pre">plugins</span></tt> lists all plugins that are used in your project.</li>
+<li><tt class="docutils literal"><span class="pre">cms</span> <span class="pre">list</span> <span class="pre">apphooks</span></tt> lists all apphooks that are used in your project.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-and-apphook-management-commands">
+<h2>4.2. Plugin and apphook management commands<a class="headerlink" href="#plugin-and-apphook-management-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-uninstall">
+<h3>4.2.1. <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">uninstall</span></tt><a class="headerlink" href="#cms-uninstall" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">uninstall</span></tt> subcommand can be used to make an uninstallation of a CMS
+Plugin or an apphook easier.</p>
+<p>It has two subcommands:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">cms</span> <span class="pre">uninstall</span> <span class="pre">plugins</span> <span class="pre">&lt;plugin</span> <span class="pre">name&gt;</span> <span class="pre">[&lt;plugin</span> <span class="pre">name</span> <span class="pre">2&gt;</span> <span class="pre">[...]]</span></tt> uninstalls
+one or several plugins by <strong>removing</strong> them from all pages where they are
+used. Note that the plugin name should be the name of the class that is
+registered to the django CMS. If you are unsure about the plugin name, use
+the <a class="reference internal" href="#cms-list-command"><em>cms list</em></a> to see a list of installed plugins.</li>
+<li><tt class="docutils literal"><span class="pre">cms</span> <span class="pre">uninstall</span> <span class="pre">apphooks</span> <span class="pre">&lt;apphook</span> <span class="pre">name&gt;</span> <span class="pre">[&lt;apphook</span> <span class="pre">name</span> <span class="pre">2&gt;</span> <span class="pre">[...]]</span></tt> uninstalls
+one or several apphooks by <strong>removing</strong> them from all pages where they are
+used. Note that the apphook name should be the name of the class that is
+registered to the django CMS. If you are unsure about the apphook name, use
+the <a class="reference internal" href="#cms-list-command"><em>cms list</em></a> to see a list of installed apphook.</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The uninstall command <strong>permanently deletes</strong> data from your database.
+You should make a backup of your database before using them!</p>
+</div>
+</div>
+</div>
+<div class="section" id="moderator-commands">
+<h2>4.3. Moderator commands<a class="headerlink" href="#moderator-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cms-moderator">
+<h3>4.3.1. <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">moderator</span></tt><a class="headerlink" href="#cms-moderator" title="Permalink to this headline">¶</a></h3>
+<p>If you turn <a class="reference internal" href="../getting_started/configuration.html#std:setting-CMS_MODERATOR"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_MODERATOR</span></tt></a> to <tt class="xref docutils literal"><span class="pre">True</span></tt> on an existing project, you
+should use the <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">moderator</span> <span class="pre">on</span></tt> command to make the required changes in the
+database, otherwise you will have problems with invisible pages.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This command <strong>alters data</strong> in your database. You should make a backup of
+your database before using it!</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">4. Command Line Interface</a><ul>
+<li><a class="reference internal" href="#informational-commands">4.1. Informational commands</a><ul>
+<li><a class="reference internal" href="#cms-list">4.1.1. <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">list</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-and-apphook-management-commands">4.2. Plugin and apphook management commands</a><ul>
+<li><a class="reference internal" href="#cms-uninstall">4.2.1. <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">uninstall</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#moderator-commands">4.3. Moderator commands</a><ul>
+<li><a class="reference internal" href="#cms-moderator">4.3.1. <tt class="docutils literal"><span class="pre">cms</span> <span class="pre">moderator</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="templatetags.html"
+                                  title="previous chapter">3. Template Tags</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../extending_cms/extending_examples.html"
+                                  title="next chapter">1. Extending the CMS: Examples</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/advanced/cli.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../extending_cms/extending_examples.html" title="1. Extending the CMS: Examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="templatetags.html" title="3. Template Tags"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

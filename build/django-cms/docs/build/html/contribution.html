@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Contributing to django CMS &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="index.html" />
+    <link rel="prev" title="7. Form and model fields" href="extending_cms/fields.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extending_cms/fields.html" title="7. Form and model fields"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="contributing-to-django-cms">
+<h1>1. Contributing to django CMS<a class="headerlink" href="#contributing-to-django-cms" title="Permalink to this headline">¶</a></h1>
+<p>Like every open-source project, django CMS is always looking for motivated
+individuals to contribute to it&#8217;s source code.
+However, to ensure the highest code quality and keep the repository nice and
+tidy, everybody has to follow a few rules (nothing major, I promise :) )</p>
+<div class="section" id="community">
+<h2>1.1. Community<a class="headerlink" href="#community" title="Permalink to this headline">¶</a></h2>
+<p>People interested in developing for the django CMS should join the
+<a class="reference external" href="http://groups.google.com/group/django-cms-developers">django-cms-developers</a> mailing list as well as heading over to #django-cms on
+the <a class="reference external" href="http://freenode.net/">freenode</a> IRC network for help and to discuss the development.</p>
+<p>You may also be interested in following <a class="reference external" href="https://twitter.com/djangocmsstatus">&#64;djangocmsstatus</a> on twitter to get the
+GitHub commits as well as the hudson build reports. There is also a <a class="reference external" href="https://twitter.com/djangocms">&#64;djangocms</a>
+account for less technical announcements.</p>
+</div>
+<div class="section" id="in-a-nutshell">
+<h2>1.2. In a nutshell<a class="headerlink" href="#in-a-nutshell" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s what the contribution process looks like, in a bullet-points fashion, and
+only for the stuff we host on GitHub:</p>
+<ol class="arabic simple">
+<li>django CMS is hosted on <a class="reference external" href="http://www.github.com">GitHub</a>, at <a class="reference external" href="https://github.com/divio/django-cms">https://github.com/divio/django-cms</a></li>
+<li>The best method to contribute back is to create an account there, then fork
+the project. You can use this fork as if it was your own project, and should
+push your changes to it.</li>
+<li>When you feel your code is good enough for inclusion, &#8220;send us a <a class="reference external" href="http://help.github.com/send-pull-requests/">pull
+request</a>&#8221;, by using the nice GitHub web interface.</li>
+</ol>
+</div>
+<div class="section" id="contributing-code">
+<h2>1.3. Contributing Code<a class="headerlink" href="#contributing-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-the-source-code">
+<h3>1.3.1. Getting the source code<a class="headerlink" href="#getting-the-source-code" title="Permalink to this headline">¶</a></h3>
+<p>If you&#8217;re interested in developing a new feature for the CMS, it is recommended
+that you first discuss it on the <a class="reference external" href="http://groups.google.com/group/django-cms-developers">django-cms-developers</a>  mailing list so as
+not to do any work that will not get merged in anyway.</p>
+<ul class="simple">
+<li>Code will be reviewed and tested by at least one core developer, preferably
+by several. Other community members are welcome to give feedback.</li>
+<li>Code <em>must</em> be tested. Your pull request should include unit-tests (that cover
+the piece of code you&#8217;re submitting, obviously)</li>
+<li>Documentation should reflect your changes if relevant. There is nothing worse
+than invalid documentation.</li>
+<li>Usually, if unit tests are written, pass, and your change is relevant, then
+it&#8217;ll be merged.</li>
+</ul>
+<p>Since we&#8217;re hosted on GitHub, django CMS uses <a class="reference external" href="http://git-scm.com/">git</a> as a version control system.</p>
+<p>The <a class="reference external" href="http://help.github.com">GitHub help</a> is very well written and will get you started on using git
+and GitHub in a jiffy. It is an invaluable resource for newbies and old timers
+alike.</p>
+</div>
+<div class="section" id="syntax-and-conventions">
+<h3>1.3.2. Syntax and conventions<a class="headerlink" href="#syntax-and-conventions" title="Permalink to this headline">¶</a></h3>
+<p>We try to conform to <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">PEP8</a> as much as possible. A few highlights:</p>
+<ul class="simple">
+<li>Indentation should be exactly 4 spaces. Not 2, not 6, not 8. <strong>4</strong>. Also, tabs
+are evil.</li>
+<li>We try (loosely) to keep the line length at 79 characters. Generally the rule
+is &#8220;it should look good in a terminal-base editor&#8221; (eg vim), but we try not be
+[Godwin&#8217;s law] about it.</li>
+</ul>
+</div>
+<div class="section" id="process">
+<h3>1.3.3. Process<a class="headerlink" href="#process" title="Permalink to this headline">¶</a></h3>
+<p>This is how you fix a bug or add a feature:</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://github.com/divio/django-cms">fork</a> us on GitHub.</li>
+<li>Checkout your fork.</li>
+<li>Hack hack hack, test test test, commit commit commit, test again.</li>
+<li>Push to your fork.</li>
+<li>Open a pull request.</li>
+</ol>
+</div>
+<div class="section" id="tests">
+<h3>1.3.4. Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
+<p>Having a wide and comprehensive library of unit-tests and integration tests is
+of exceeding importance. Contributing tests is widely regarded as a very
+prestigious contribution (you&#8217;re making everybody&#8217;s future work much easier by
+doing so). Good karma for you. Cookie points. Maybe even a beer if we meet in
+person :)</p>
+<p>Generally tests should be:</p>
+<ul class="simple">
+<li>Unitary (as much as possible). I.E. should test as much as possible only one
+function/method/class. That&#8217;s the
+very definition of unit tests. Integration tests are interesting too
+obviously, but require more time to maintain since they have a higher
+probability of breaking.</li>
+<li>Short running. No hard numbers here, but if your one test doubles the time it
+takes for everybody to run them, it&#8217;s probably an indication that you&#8217;re doing
+it wrong.</li>
+</ul>
+<p>In a similar way to code, pull requests will be reviewed before pulling
+(obviously), and we encourage discussion via code review (everybody learns
+something this way) or IRC discussions.</p>
+<div class="section" id="running-the-tests">
+<h4>1.3.4.1. Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h4>
+<p>To run the tests simply execute <tt class="docutils literal"><span class="pre">runtests.sh</span></tt> from your shell. To make sure
+you have the correct environment you should also provide the <tt class="docutils literal"><span class="pre">--rebuild-env</span></tt>
+flag, but since that makes running the test suite slower, it&#8217;s disabled by
+default. You can also see all flags using <tt class="docutils literal"><span class="pre">--help</span></tt>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="contributing-documentation">
+<h2>1.4. Contributing Documentation<a class="headerlink" href="#contributing-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Perhaps considered &#8220;boring&#8221; by hard-core coders, documentation is sometimes even
+more important than code! This is what brings fresh blood to a project, and
+serves as a reference for old timers. On top of this, documentation is the one
+area where less technical people can help most - you just need to write a
+semi-decent English. People need to understand you. We don&#8217;t care about style or
+correctness.</p>
+<p>Documentation should be:</p>
+<ul class="simple">
+<li>We use <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a>/<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">restructuredText</a>. So obviously this is the format you should
+use :) File extensions should be .rst.</li>
+<li>Written in English. We can discuss how it would bring more people to the
+project to have a Klingon translation or anything, but that&#8217;s a problem we
+will ask ourselves when we already have a good documentation in English.</li>
+<li>Accessible. You should assume the reader to be moderately familiar with
+Python and Django, but not anything else. Link to documentation of libraries
+you use, for example, even if they are &#8220;obvious&#8221; to you (South is the first
+example that comes to mind - it&#8217;s obvious to any Django programmer, but not to
+any newbie at all).
+A brief description of what it does is also welcome.</li>
+</ul>
+<p>Pulling of documentation is pretty fast and painless. Usually somebody goes over
+your text and merges it, since there are no &#8220;breaks&#8221; and that GitHub parses rst
+files automagically it&#8217;s really convenient to work with.</p>
+<p>Also, contributing to the documentation will earn you great respect from the
+core developers. You get good karma just like a test contributor, but you get
+double cookie points. Seriously. You rock.</p>
+<div class="section" id="section-style">
+<h3>1.4.1. Section style<a class="headerlink" href="#section-style" title="Permalink to this headline">¶</a></h3>
+<p>We use Python documentation conventions fo section marking:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">#</span></tt> with overline, for parts</li>
+<li><tt class="docutils literal"><span class="pre">*</span></tt> with overline, for chapters</li>
+<li><tt class="docutils literal"><span class="pre">=</span></tt>, for sections</li>
+<li><tt class="docutils literal"><span class="pre">-</span></tt>, for subsections</li>
+<li><tt class="docutils literal"><span class="pre">^</span></tt>, for subsubsections</li>
+<li><tt class="docutils literal"><span class="pre">&quot;</span></tt>, for paragraphs</li>
+</ul>
+</div>
+</div>
+<div class="section" id="translations">
+<h2>1.5. Translations<a class="headerlink" href="#translations" title="Permalink to this headline">¶</a></h2>
+<p>For translators we have a <a class="reference external" href="http://www.transifex.net/projects/p/django-cms/">Transifex account</a> where you can translate
+the .po files and don&#8217;t need to install git or mercurial to be able to
+contribute. All changes there will be automatically sent to the project.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">1. Contributing to django CMS</a><ul>
+<li><a class="reference internal" href="#community">1.1. Community</a></li>
+<li><a class="reference internal" href="#in-a-nutshell">1.2. In a nutshell</a></li>
+<li><a class="reference internal" href="#contributing-code">1.3. Contributing Code</a><ul>
+<li><a class="reference internal" href="#getting-the-source-code">1.3.1. Getting the source code</a></li>
+<li><a class="reference internal" href="#syntax-and-conventions">1.3.2. Syntax and conventions</a></li>
+<li><a class="reference internal" href="#process">1.3.3. Process</a></li>
+<li><a class="reference internal" href="#tests">1.3.4. Tests</a><ul>
+<li><a class="reference internal" href="#running-the-tests">1.3.4.1. Running the tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contributing-documentation">1.4. Contributing Documentation</a><ul>
+<li><a class="reference internal" href="#section-style">1.4.1. Section style</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#translations">1.5. Translations</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="extending_cms/fields.html"
+                                  title="previous chapter">7. Form and model fields</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/contribution.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extending_cms/fields.html" title="7. Form and model fields"
+             >previous</a> |</li>
+        <li><a href="index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

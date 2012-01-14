@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7. Plugins reference &mdash; django cms v2.2 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django cms v2.2 documentation" href="../index.html" />
+    <link rel="next" title="1. Internationalization" href="../advanced/i18n.html" />
+    <link rel="prev" title="6. Navigation" href="navigation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../advanced/i18n.html" title="1. Internationalization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="navigation.html" title="6. Navigation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="plugins-reference">
+<h1>7. Plugins reference<a class="headerlink" href="#plugins-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="file">
+<h2>7.1. File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h2>
+<p>Allows you to upload a file. A filetype icon will be assigned based on the file
+extension.</p>
+<p>For installation be sure you have the following in the <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a>
+setting in your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.file&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You should take care that the directory defined by the configuration setting
+<a class="reference internal" href="configuration.html#std:setting-CMS_PAGE_MEDIA_PATH"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_PAGE_MEDIA_PATH</span></tt></a> (by default <tt class="docutils literal"><span class="pre">cms_page_media/</span></tt> relative to
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MEDIA_ROOT" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a>) is writable by the user under which django will be
+running.</p>
+<p>You might consider using <a class="reference external" href="https://github.com/stefanfoulis/django-filer">django-filer</a> with <a class="reference external" href="https://github.com/stefanfoulis/cmsplugin-filer">django CMS plugin</a> and its
+<tt class="docutils literal"><span class="pre">cmsplugin_filer_file</span></tt> component instead.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The builtin file plugin does only work with local storages. If you need
+more advanced solutions, please look at alternative file plugins for the
+django CMS, such as <a class="reference external" href="https://github.com/stefanfoulis/django-filer">django-filer</a>.</p>
+</div>
+</div>
+<div class="section" id="flash">
+<h2>7.2. Flash<a class="headerlink" href="#flash" title="Permalink to this headline">¶</a></h2>
+<p>Allows you to upload and display a Flash SWF file on your page.</p>
+<p>For installation be sure you have the following in the
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting in your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.flash&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="googlemap">
+<h2>7.3. GoogleMap<a class="headerlink" href="#googlemap" title="Permalink to this headline">¶</a></h2>
+<p>Displays a map of an address on your page.</p>
+<p>For installation be sure you have the following in the <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a>
+setting in your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.googlemap&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="link">
+<h2>7.4. Link<a class="headerlink" href="#link" title="Permalink to this headline">¶</a></h2>
+<p>Displays a link to an arbitrary URL or to a page. If a page is moved the URL
+will still be correct.</p>
+<p>For installation be sure to have the following in the <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a>
+setting in your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.link&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As of version 2.2, the link plugin no longer verifies the existance of
+link targets.</p>
+</div>
+</div>
+<div class="section" id="picture">
+<h2>7.5. Picture<a class="headerlink" href="#picture" title="Permalink to this headline">¶</a></h2>
+<p>Displays a picture in a page.</p>
+<p>For installation be sure you have the following in the <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a>
+setting in your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.picture&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to resize the picture you can get a thumbnail library. We
+recommend <a class="reference external" href="http://code.google.com/p/sorl-thumbnail/">sorl.thumbnail</a>.</p>
+<p>In your project template directory create a folder called <tt class="docutils literal"><span class="pre">cms/plugins</span></tt> and
+create a file called <tt class="docutils literal"><span class="pre">picture.html</span></tt> in there. Here is an example
+<tt class="docutils literal"><span class="pre">picture.html</span></tt> template:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">load</span> <span class="nv">i18n</span> <span class="nv">thumbnail</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">spaceless</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">picture.url</span> <span class="cp">%}</span><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">picture.url</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">ifequal</span> <span class="nv">placeholder</span> <span class="s2">&quot;content&quot;</span> <span class="cp">%}</span>
+    <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">thumbnail</span> <span class="nv">picture.image.name</span> <span class="m">484</span><span class="nv">x1500</span> <span class="nv">upscale</span> <span class="cp">%}</span><span class="s">&quot;</span> <span class="cp">{%</span> <span class="k">if</span> <span class="nv">picture.alt</span> <span class="cp">%}</span><span class="na">alt=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">picture.alt</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="nt">/&gt;</span>
+<span class="cp">{%</span> <span class="k">endifequal</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">ifequal</span> <span class="nv">placeholder</span> <span class="s2">&quot;teaser&quot;</span> <span class="cp">%}</span>
+    <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">thumbnail</span> <span class="nv">picture.image.name</span> <span class="m">484</span><span class="nv">x1500</span> <span class="nv">upscale</span> <span class="cp">%}</span><span class="s">&quot;</span> <span class="cp">{%</span> <span class="k">if</span> <span class="nv">picture.alt</span> <span class="cp">%}</span><span class="na">alt=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">picture.alt</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span><span class="nt">/&gt;</span>
+<span class="cp">{%</span> <span class="k">endifequal</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">picture.url</span> <span class="cp">%}</span><span class="nt">&lt;/a&gt;</span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">endspaceless</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>In this template the picture is scaled differently based on which placeholder
+it was placed in.</p>
+<p>You should take care that the directory defined by the configuration setting
+<a class="reference internal" href="configuration.html#std:setting-CMS_PAGE_MEDIA_PATH"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_PAGE_MEDIA_PATH</span></tt></a> (by default <tt class="docutils literal"><span class="pre">cms_page_media/</span></tt> relative to
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MEDIA_ROOT" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a>) is writable by the user under which django will be
+running.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more advanced use cases where you would like to upload your media
+to a central location, consider using  <a class="reference external" href="https://github.com/stefanfoulis/django-filer">django-filer</a> with
+<a class="reference external" href="https://github.com/stefanfoulis/cmsplugin-filer">django CMS plugin</a> and its <tt class="docutils literal"><span class="pre">cmsplugin_filer_video</span></tt> component
+instead.</p>
+</div>
+</div>
+<div class="section" id="snippet">
+<h2>7.6. Snippet<a class="headerlink" href="#snippet" title="Permalink to this headline">¶</a></h2>
+<p>Renders a HTML snippet from a HTML file in your templates directories or a
+snippet given via direct input.</p>
+<p>For installation be sure you have the following in the <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a>
+setting in your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.snippet&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This plugin should mainly be used during development to quickly test
+HTML snippets.</p>
+</div>
+</div>
+<div class="section" id="teaser">
+<h2>7.7. Teaser<a class="headerlink" href="#teaser" title="Permalink to this headline">¶</a></h2>
+<p>Displays a teaser box for another page or a URL. A picture and a description
+can be added.</p>
+<p>For installation be sure you have the following in the <a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a>
+settings in your project&#8217;s <tt class="docutils literal"><span class="pre">settings.py</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.teaser&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You should take care that the directory defined by the configuration setting
+<a class="reference internal" href="configuration.html#std:setting-CMS_PAGE_MEDIA_PATH"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_PAGE_MEDIA_PATH</span></tt></a> (by default <tt class="docutils literal"><span class="pre">cms_page_media/</span></tt> relative to
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MEDIA_ROOT" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a>) is writable by the user under which django will be
+running.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more advanced use cases where you would like to upload your media
+to a central location, consider using  <a class="reference external" href="https://github.com/stefanfoulis/django-filer">django-filer</a> with
+<a class="reference external" href="https://github.com/stefanfoulis/cmsplugin-filer">django CMS plugin</a> and its <tt class="docutils literal"><span class="pre">cmsplugin_filer_video</span></tt> component
+instead.</p>
+</div>
+</div>
+<div class="section" id="text">
+<h2>7.8. Text<a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h2>
+<p>Displays text. If plugins are text-enabled they can be placed inside the
+text-flow. At this moment the following core plugins are text-enabled:</p>
+<ul class="simple">
+<li><tt class="xref py py-mod docutils literal"><span class="pre">cms.plugins.link</span></tt></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">cms.plugins.picture</span></tt></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">cms.plugins.file</span></tt></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">cms.plugins.snippet</span></tt></li>
+</ul>
+<p>The current editor is <a class="reference external" href="http://www.wymeditor.org/">Wymeditor</a>. If you want to
+use TinyMce you need to install <a class="reference external" href="http://code.google.com/p/django-tinymce/">django-tinymce</a>. If <tt class="docutils literal"><span class="pre">tinymce</span></tt> is in your
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> it will be automatically enabled. If you have tinymce
+installed but don&#8217;t want to use it in the cms put the following in your
+<tt class="docutils literal"><span class="pre">settings.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CMS_USE_TINYMCE</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When using django-tinymce, you also need to configure it. See the
+<a class="reference external" href="http://django-tinymce.googlecode.com/svn/tags/release-1.5/docs/.build/html/installation.html#id2">django-tinymce docs</a> for more information.</p>
+</div>
+<p>For installation be sure you have the following in your project&#8217;s
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.text&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="video">
+<h2>7.9. Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h2>
+<p>Plays Video Files or Youtube / Vimeo Videos. Uses the <a class="reference external" href="http://github.com/FlashJunior/OSFlashVideoPlayer">OSFlashVideoPlayer</a>. If you upload a file use
+.flv files or h264 encoded video files.</p>
+<p>For installation be sure you have the following in your project&#8217;s
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.video&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>There are some settings you can set in your settings.py to overwrite some
+default behavior:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">VIDEO_AUTOPLAY</span></tt> ((default: <tt class="xref docutils literal"><span class="pre">False</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_AUTOHIDE</span></tt> (default: <tt class="xref docutils literal"><span class="pre">False</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_FULLSCREEN</span></tt> (default: <tt class="xref docutils literal"><span class="pre">True</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_LOOP</span></tt> (default: <tt class="xref docutils literal"><span class="pre">False</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_AUTOPLAY</span></tt> (default: <tt class="xref docutils literal"><span class="pre">False</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_BG_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;000000&quot;</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_TEXT_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;FFFFFF&quot;</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_SEEKBAR_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;13ABEC&quot;</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_SEEKBARBG_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;333333&quot;</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_LOADINGBAR_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;828282&quot;</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_BUTTON_OUT_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;333333&quot;</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_BUTTON_OVER_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;000000&quot;</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">VIDEO_BUTTON_HIGHLIGHT_COLOR</span></tt> (default: <tt class="docutils literal"><span class="pre">&quot;FFFFFF&quot;</span></tt>)</li>
+</ul>
+<p>You should take care that the directory defined by the configuration setting
+<a class="reference internal" href="configuration.html#std:setting-CMS_PAGE_MEDIA_PATH"><tt class="xref std std-setting docutils literal"><span class="pre">CMS_PAGE_MEDIA_PATH</span></tt></a> (by default <tt class="docutils literal"><span class="pre">cms_page_media/</span></tt> relative to
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-MEDIA_ROOT" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt></a>) is writable by the user under which django will be
+running.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more advanced use cases where you would like to upload your media
+to a central location, consider using  <a class="reference external" href="https://github.com/stefanfoulis/django-filer">django-filer</a> with
+<a class="reference external" href="https://github.com/stefanfoulis/cmsplugin-filer">django CMS plugin</a> and its <tt class="docutils literal"><span class="pre">cmsplugin_filer_video</span></tt> component
+instead.</p>
+</div>
+</div>
+<div class="section" id="twitter">
+<h2>7.10. Twitter<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
+<p>Displays the last number of post of a twitter user.</p>
+<p>For installation be sure you have the following in your project&#8217;s
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.twitter&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since avatars are not guaranteed to be available over SSL (HTTPS), by
+default the Twitter plugin does not use avatars on secure sites.</p>
+</div>
+</div>
+<div class="section" id="inherit">
+<h2>7.11. Inherit<a class="headerlink" href="#inherit" title="Permalink to this headline">¶</a></h2>
+<p>Displays all plugins of another page or another language. Great if you need
+always the same plugins on a lot of pages.</p>
+<p>For installation be sure you have the following in your project&#8217;s
+<a class="reference external" href="http://readthedocs.org/docs/django/en/latest/ref/settings.html#std:setting-INSTALLED_APPS" title="(in Django v1.3)"><tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c"># ...</span>
+    <span class="s">&#39;cms.plugins.inherit&#39;</span><span class="p">,</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The inherit plugin is currently the only core-plugin which can
+<strong>not</strong> be used in non-cms placeholders.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">7. Plugins reference</a><ul>
+<li><a class="reference internal" href="#file">7.1. File</a></li>
+<li><a class="reference internal" href="#flash">7.2. Flash</a></li>
+<li><a class="reference internal" href="#googlemap">7.3. GoogleMap</a></li>
+<li><a class="reference internal" href="#link">7.4. Link</a></li>
+<li><a class="reference internal" href="#picture">7.5. Picture</a></li>
+<li><a class="reference internal" href="#snippet">7.6. Snippet</a></li>
+<li><a class="reference internal" href="#teaser">7.7. Teaser</a></li>
+<li><a class="reference internal" href="#text">7.8. Text</a></li>
+<li><a class="reference internal" href="#video">7.9. Video</a></li>
+<li><a class="reference internal" href="#twitter">7.10. Twitter</a></li>
+<li><a class="reference internal" href="#inherit">7.11. Inherit</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="navigation.html"
+                                  title="previous chapter">6. Navigation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../advanced/i18n.html"
+                                  title="next chapter">1. Internationalization</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/getting_started/plugin_reference.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../advanced/i18n.html" title="1. Internationalization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="navigation.html" title="6. Navigation"
+             >previous</a> |</li>
+        <li><a href="../index.html">django cms v2.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, Patrick Lauber.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

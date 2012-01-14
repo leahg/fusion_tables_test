@@ -103,20 +103,21 @@ div.map-container {
   color: gray;
   font-size: 11px;
   border: 1px #ffdd00;
-  max-width: 213px;
+  max-width: 250px;
   padding-right: 0;
   margin-right:0;
+  overflow: hidden;
 }
 
 
 
 .FT_infowindow {
-  transform: scale (.8);
+  overflow: hidden;
   font-size: 11px;
   margin-bottom: 0;
   padding-bottom: 0;
   color: gray;
-  max-width: 213px;
+  max-width: 250px;
 
 }
 
