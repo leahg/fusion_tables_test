@@ -282,6 +282,12 @@ ul {
 
 li label {
   text-align: center;
+  cursor: pointer;
+}
+
+li label::selection,
+li label span::selection {
+  background-color: transparent;
 }
 
 span {

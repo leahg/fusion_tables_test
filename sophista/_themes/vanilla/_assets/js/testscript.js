@@ -206,7 +206,7 @@
 
   var htmlTypeContent = ['<ul>'];
 
-  // clear markers
+  // clear marker windows
   $sidebar.find('.clearmarkers').bind('click', function(e) {
     e.preventDefault();
     $mapCanvas.gmap('clear', 'markers');
