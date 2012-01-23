@@ -244,10 +244,11 @@
     }
     
     if ( ! $this.attr('checked') ) {
+      // hide
       $this.next().removeClass('active');
       $sidebar.find('.'+type).parent().parent().addClass('hide');
     } else {
-      // the label
+      // show
       $this.next().addClass('active');
       $sidebar.find('.'+type).parent().parent().removeClass('hide');
     }
@@ -255,6 +256,9 @@
     $sidebar.find('.'+type).siblings().removeClass('active');
     if ( ! $sidebar.find('.'+type).hasClass('active') )
       $sidebar.find('.'+type).parent().parent().addClass('active');
+
+    //console.log( $sidebar.find('.'+type) );
+    //$sidebar.find('.hide.'+type).trigger('');
   });
 
   // sidebar
@@ -282,7 +286,7 @@
       type = _tbl.getValue(i, 3);
       var sidebarContent = "";
 
-      $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true }, function(map, marker) {
+      //$mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true }, function(map, marker) {
 
         // sidebar content
         var sidebarContent = "<li><h2><a data-markerid='"+id+"' class='"+type+"' rel='"+pt+"' href='#markerid-"+id+"'>"+name+"</a></h2><p>"+desc+"</p><div class='type'>"+type+"</div><div class='latlng'>"+pt+"</div></li>";
@@ -300,7 +304,7 @@
 
         // add marker to global list
         gmarkers.push(new_marker);
-
+        
         if ( sidebarEnabled ) {
           
           $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
@@ -323,7 +327,7 @@
         }
 
 
-      });
+      //});
 
       //htmlSidebarContent[-1] = "</ul>";
       htmlSidebarContent[(htmlSidebarContent.length+1)] = "</ul>";
@@ -384,7 +388,7 @@
 
     info_window = new google.maps.InfoWindow();
 
-    query.send(getData);
+    query.send(getData); // loads two data points!
     type_query.send(typeControlsData);
 
   });
