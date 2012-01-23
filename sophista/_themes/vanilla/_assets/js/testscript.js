@@ -4,7 +4,7 @@
   //
   // @author        gilman.leah@gmail.com
   // @datetime      12.21.2011.7.51.p
-  //
+  // @todo          clean me!; validate scss/css
   // == //
  
 
@@ -257,8 +257,8 @@
     if ( ! $sidebar.find('.'+type).hasClass('active') )
       $sidebar.find('.'+type).parent().parent().addClass('active');
 
-    //console.log( $sidebar.find('.'+type) );
-    //$sidebar.find('.hide.'+type).trigger('');
+    //console.log( $sidebar.find('.hide').find('.'+type) );
+    $sidebar.find('.hide').find('.'+type).trigger('click');
   });
 
   // sidebar
@@ -269,21 +269,21 @@
     var _row_count = _tbl.getNumberOfRows();
     var _col_count = _tbl.getNumberOfColumns();
     var _col_label = _tbl.getColumnLabel(0);
-    var name, pt, desc, type;
+    //var name, pt, desc, type;
     var htmlSidebarContent = [];
 
     htmlSidebarContent[0] = "<ul>";
 
     for (var i = 0; i < _row_count; i++) {
       var id = i;
-      name = _tbl.getValue(i, 0);
-      pt = _tbl.getValue(i, 1),
+      var name = _tbl.getValue(i, 0);
+      var pt = _tbl.getValue(i, 1),
           lat = pt.split(',')[0],
           lng = pt.split(',')[1];
       var latLng = new google.maps.LatLng(lat, lng);
       // setting character limit
-      desc = _tbl.getValue(i, 2).substr(0, descCharLimit) + " ...";
-      type = _tbl.getValue(i, 3);
+      var desc = _tbl.getValue(i, 2).substr(0, descCharLimit) + " ...";
+      var type = _tbl.getValue(i, 3);
       var sidebarContent = "";
 
       //$mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true }, function(map, marker) {
@@ -306,6 +306,8 @@
         gmarkers.push(new_marker);
         
         if ( sidebarEnabled ) {
+
+          // @todo figure out what rabbit hole the content keeps falling into
           
           $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
             $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
