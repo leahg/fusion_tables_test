@@ -55,7 +55,7 @@ h1, h2 {
   margin: 0 auto 30px;
   position: relative;
   top: 20px;
-  background: #efefef;
+  background: white;
 }
 /* line 116, ../sass/teststyle.scss */
 #container .page-content {
@@ -118,17 +118,11 @@ h1, h2 {
 }
 /* line 161, ../sass/teststyle.scss */
 #container div.map-container h1 {
-  background-image: -moz-linear-gradient(top, white, #d1d1d1);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(white), to(#d1d1d1));
-  background-image: -o-linear-gradient(top, white, #d1d1d1);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d1d1d1');
   /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
   /*Element must have a height (not auto)*/
   /*All filters must be placed together*/
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d1d1d1')";
   /*Element must have a height (not auto)*/
   /*All filters must be placed together*/
-  background-image: linear-gradient(top, #ffffff, #d1d1d1);
   border: 1px #ddd solid;
   border-left: none;
   border-right: none;
@@ -168,7 +162,7 @@ h1, h2 {
 #container #map_canvas {
   float: left;
   width: 718px;
-  width: 490px;
+  width: 523px;
   min-height: 400px;
   border: 1px #ddd solid;
   border-left: none;
@@ -178,7 +172,7 @@ h1, h2 {
 #container #sidebar {
   font-family: "Helvetica", sans-serif;
   float: left;
-  width: 231px;
+  width: 190px;
   margin: 10px 0 0 10px;
   border: 1px #ddd solid;
   border-right: 0;
@@ -186,13 +180,11 @@ h1, h2 {
 }
 /* line 200, ../sass/teststyle.scss */
 #container #sidebar .mod-type-selector {
-  border: 1px #ddd solid;
   margin: 10px;
-  padding: 10px;
 }
 /* line 205, ../sass/teststyle.scss */
 #container #sidebar h2 {
-  font-size: 16px;
+  font-size: 12px;
   margin: 0;
   padding: 5px 0 0;
 }
@@ -211,7 +203,7 @@ h1, h2 {
 }
 /* line 212, ../sass/teststyle.scss */
 #container #sidebar ul li p {
-  font-size: 12px;
+  font-size: 10px;
 }
 /* line 213, ../sass/teststyle.scss */
 #container #sidebar ul li div.latlng {
@@ -235,17 +227,11 @@ h1, h2 {
 /* line 232, ../sass/teststyle.scss */
 #container #checklist {
   margin: 10px 0 0 0;
-  background-image: -moz-linear-gradient(top, white, #d1d1d1);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(white), to(#d1d1d1));
-  background-image: -o-linear-gradient(top, white, #d1d1d1);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d1d1d1');
   /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
   /*Element must have a height (not auto)*/
   /*All filters must be placed together*/
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d1d1d1')";
   /*Element must have a height (not auto)*/
   /*All filters must be placed together*/
-  background-image: linear-gradient(top, #ffffff, #d1d1d1);
   border: 1px #ddd solid;
   border-left: none;
   border-right: none;
