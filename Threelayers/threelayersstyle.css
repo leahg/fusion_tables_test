@@ -188,6 +188,7 @@ background-color: blue;
 }
 
 hr {
+  display: block;
   border: 1px;
   height: 1px;
   background-color: #4D4D4D;
@@ -236,12 +237,6 @@ padding-right: 10px;
    color: white;
    position: absolute;
 }
-
-#sidebartable {
-  
-}
-
-
 
 li {
   display: inline;

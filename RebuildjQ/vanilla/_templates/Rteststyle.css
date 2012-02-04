@@ -1,0 +1,286 @@
+/* line 9, ../sass/teststyle.scss */
+.hide {
+  display: none !important;
+}
+
+/* line 10, ../sass/teststyle.scss */
+.accessiblyHide {
+  position: absolute;
+  left: -9999px;
+}
+
+/* line 88, ../sass/teststyle.scss */
+*::focus,
+*::active {
+  outline: none !important;
+}
+
+body {
+  font-family: "Helvetica", sans-serif;
+}
+
+/* line 91, ../sass/teststyle.scss */
+fieldset {
+  outline: none !important;
+}
+
+/* line 93, ../sass/teststyle.scss */
+h2.tooltip-header {
+  font-size: 12px;
+  margin: 0;
+  text-decoration: none;
+}
+
+/* line 97, ../sass/teststyle.scss */
+p.tooltip-desc {
+  font-size: 12px;
+}
+
+/* line 101, ../sass/teststyle.scss */
+body {
+  background-color: white;
+}
+
+/* line 103, ../sass/teststyle.scss */
+h1, h2 {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 105, ../sass/teststyle.scss */
+#container {
+  margin: 1px #ccc solid;
+  /*box-shadow: 0 0 0.5em 0 rgba(200, 200, 200, 0.6); */
+  width: 733px;
+  padding: 0 0 0;
+  margin: 0 auto 30px;
+  position: relative;
+  top: 20px;
+}
+/* line 116, ../sass/teststyle.scss */
+#container .page-content {
+  margin: 0 10px;
+}
+/* line 120, ../sass/teststyle.scss */
+#container div.map-container {
+  margin: 10px 0 0;
+  /* For modern browsers */
+  /* For IE 6/7 (trigger hasLayout) */
+}
+
+/* line 161, ../sass/teststyle.scss */
+#container div.map-container h1 {
+  border-bottom: 1px #ddd solid;
+  font-size: 16px;
+  padding: 0 0 10px;
+  margin: 0 0 10px;
+  color: #333;
+  text-shadow: 1px 1px 1px #fff;
+  line-height: 1;
+}
+/* line 57, ../sass/teststyle.scss */
+#container div.map-container:before, #container div.map-container:after {
+  content: "";
+  display: table;
+}
+/* line 62, ../sass/teststyle.scss */
+#container div.map-container:after {
+  clear: both;
+}
+/* line 67, ../sass/teststyle.scss */
+#container div.map-container {
+  zoom: 1;
+}
+
+
+/* line 188, ../sass/teststyle.scss */
+#container #map_canvas {
+  float: left;
+  width: 733px;
+  height: 420px;
+  margin: 0;
+  position: absolute;
+}
+/* line 199, ../sass/teststyle.scss */
+#container #sidebar {
+  color: #4D4D4D;
+  text-decoration: white;
+  width: 190px;
+  height: 420px;
+  font-size: 11px;
+  background: #B1B0B4;
+  position: absolute;
+  margin-left: 537px;
+  clear: both;
+  opacity: .9;
+  overflow: auto;
+}
+
+
+/* line 200, ../sass/teststyle.scss */
+#container #sidebar .mod-type-selector {
+ padding-left: 5px;
+ padding-top: 2px;
+ padding-right: 5px;
+}
+/* line 205, ../sass/teststyle.scss */
+#container #sidebar h2 {
+  font-size: 11px;
+  margin: 0;
+  padding: 5px 0 0;
+  text-decoration: none;
+}
+/* line 209, ../sass/teststyle.scss */
+#container #sidebar ul {
+  margin: 0;
+  padding-left: 5px;
+  list-style: none;
+  text-decoration: none;
+}
+/* line 210, ../sass/teststyle.scss */
+#container #sidebar ul li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+#container #sidebar ul li div.name {
+  padding-left: 5px;
+  font-size: 11px;
+}
+/* line 212, ../sass/teststyle.scss */
+#container #sidebar ul li div.desc {
+  font-size: 11px;
+  padding-left: 5px;
+}
+/* line 213, ../sass/teststyle.scss */
+#container #sidebar ul li div.latlng {
+  display: none;
+  font-size: 11px;
+  color: #ccc;
+}
+/* line 216, ../sass/teststyle.scss */
+#container #sidebar ul li div.type {
+  font-size: 11px;
+  padding-left: 5px;
+}
+/* line 221, ../sass/teststyle.scss */
+#container #sidebar ul li a {
+  display: block;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+hr {
+  border: 1px;
+  height: 1px;
+  background-color: #4D4D4D;
+  opacity: .4;
+}
+
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+padding-right: 10px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment  {
+height: 5px;
+display: block;
+background-color: transparent;
+padding-right: 10px;
+
+}
+
+::-webkit-scrollbar-track-piece  {
+background-color: transparent;
+border: 4px solid #B1B0B4;
+-webkit-border-radius: 4px;
+padding-right: 10px;
+
+}
+
+::-webkit-scrollbar-thumb:vertical {
+height: 5px;
+width: 5px;
+background-color: #4D4D4D;
+-webkit-border-radius: 4px;
+padding-right: 10px;
+
+}
+
+#container fieldset {
+  padding: 0;
+  border: none;
+  margin: 0;
+} 
+
+/* line 183, ../sass/teststyle.scss */
+
+
+/* line 232, ../sass/teststyle.scss */
+#container #checklist {
+  font-family: sans-serif;
+  margin-top: 388px;
+  padding-left: 5px;
+  position: absolute;
+}
+
+/* line 238, ../sass/teststyle.scss */
+#container #checklist input.checkbox {
+  cursor: pointer;
+  position: absolute;
+  left: -9999px;
+}
+
+/* line 241, ../sass/teststyle.scss */
+#container #checklist label.active {
+  background: url(imgongold.png);
+  height: 30px;
+  width: 173px;
+  display: inline-block;
+  color: white;
+  font-size: 13px;
+  color: transparent;
+}
+/* line 243, ../sass/teststyle.scss */
+#container #checklist label {
+  cursor: pointer;
+  color: gray;
+  background: url(imgoffsilver.png);
+  height: 30px;
+  width: 173px;
+  display: inline-block;
+  font-size: 13px;
+  color: transparent;
+}
+
+
+
+/*
+input[type=checkbox] {
+    display:none;
+  }
+
+  input[type=checkbox] + label
+   {
+       color: gray;
+       background: url(imgoffsilver.png);
+       height: 30px;
+       width: 173px;
+       display:inline-block;
+       font-size: 13px;
+   }
+   
+   input[type=checkbox]:checked + label
+    {
+       background: url(imgongold.png);
+        height: 30px;
+        width: 173px;
+        display:inline-block;
+        color: white;
+        font-size: 13px;
+    }
+*/

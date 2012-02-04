@@ -1,0 +1,260 @@
+@import "compass/css3";
+
+$BASE_FONT: "monospace";
+
+$DEBUG: false;
+$BACKUP_FONT: false;
+$ALT_STACK: false; // @default: false;
+
+.hide { display: none !important; }
+.accessiblyHide { position: absolute; left: -9999px; }
+
+@mixin small-font() {
+  font-size: 10px;
+  color: #ccc;
+}
+
+@function __font__set($family) {
+  
+  $fs: $BASE_FONT;
+
+  $fs: Helvetica, sans-serif;
+
+  @if $family != "" and $family != false {
+    $fs: $family;
+  }
+  
+  @if $BACKUP_FONT == true {
+    $fs: sans-serif;
+  }
+  
+  @if $ALT_STACK != "" and $ALT_STACK != false {
+    $fs: $ALT_STACK;
+  }
+
+  @if $DEBUG == true {
+    $fs: Comic Sans;
+  }
+  
+  @return $fs;
+
+}
+
+@mixin __fs__($family) {
+  font: {
+    family: __font__set($family); 
+  }
+} 
+
+@mixin accessiblyHide() {
+  position: absolute; left: -9999px;
+}
+
+@mixin clearfix() {
+
+  /* For modern browsers */
+  &:before,
+  &:after {
+      content:"";
+      display:table;
+  }
+
+  &:after {
+      clear:both;
+  }
+
+  /* For IE 6/7 (trigger hasLayout) */
+  & {
+      zoom:1;
+  }
+
+}
+
+@mixin panel_gradient() {
+  background-image: -moz-linear-gradient(top, #ffffff, #d1d1d1);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#ffffff), to(#d1d1d1));
+  background-image: -o-linear-gradient(top, #ffffff, #d1d1d1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d1d1d1');
+  /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d1d1d1')";
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  background-image: linear-gradient(top, #ffffff, #d1d1d1);
+}
+
+*::focus,
+*::active { 
+  outline: none !important;
+}
+fieldset { outline: none !important;
+}
+h2.tooltip-header { 
+  font-size: 16px; 
+  margin: 0; 
+  font-family: "Helvetica", sans-serif; }
+p.tooltip-desc { 
+  font-family: "Helvetica", sans-serif;
+  font-size: 12px; }
+
+body {
+  background: #efefef; }
+h1,h2 { margin: 0; padding: 0; }
+
+#container { 
+  border: 1px #ccc solid;
+  box-shadow: 0 0 .5em rgba(200,200,200,.6);
+  width: 960px;
+  width: 733px; /* dunno? */
+  padding: 0 0 0;
+  margin: 0 auto 30px;
+  position: relative;
+  top: 20px;
+  background: #efefef; 
+
+  .page-content { 
+    margin: 0 10px;
+  }
+
+  div.map-container { 
+
+    div.cms_placeholder-bar {
+      //border-left: none !important;
+      //border-right: none !important; 
+      } 
+    ul.cms_placeholder-subnav { 
+      @include border-radius(0);
+      //box-shadow: 0 0 .4em rgba(0,0,0,.3);
+      border: 1px #ccc dotted;
+      li.cms_placeholder-subnav-title { 
+        ul { 
+          li.cms_placeholder-last { 
+            a { } }
+          li { 
+            @include opacity(.5);
+            &:hover { 
+              @include opacity(1); }
+            a { 
+              color: #333; 
+              font-weight: 600; 
+              text-transform: lowercase;
+              font-variant: small-caps;
+              font-size: 16px;
+              &:hover { 
+                color: #333 !important;
+                background: #fff; } } } } } }
+    li.cms_placeholder-subnav-title {
+      span { 
+        //@include panel-gradient;
+        @include border-radius(0);
+        //background: white url('../../../../images/toolbar/toolbar_bg.gif') repeat-x left bottom;
+        color: #333; 
+        font-weight: 600; 
+        text-transform: lowercase;
+        border-bottom: 1px #999 dotted;
+        font-variant: small-caps;
+        font-size: 16px;
+        text-shadow: 0 0 -1px #111; } }
+
+    margin: 10px 0 0;
+    h1 { 
+      @include panel_gradient;
+      border: 1px #ddd solid;
+      border-left: none;
+      border-right: none;
+      padding: 5px 10px 10px;
+      margin: 0 0 10px;
+      color: #333;
+      text-shadow: 1px 1px 1px #fff;
+      font-variant: small-caps;
+      text-transform: lowercase;
+      line-height: 1; font: { family: "Helvetica", sans-serif; } }
+    @include clearfix; }
+
+  fieldset { 
+
+    padding: 0;
+    border: none; 
+    
+    margin: 0; }
+    
+
+    .field-block { padding: 10px 20px;  }
+    .field-settype { }
+
+  label { }
+
+  #map_canvas { 
+    float: left;
+    width: 718px; // for 960
+    width: 490px; // for 733
+    min-height: 400px;
+    //height: 100%;
+    border: 1px #ddd solid;
+    border-left: none;
+    margin: 10px 0 0;
+  }
+
+  #sidebar { 
+    .mod-type-selector { 
+      border: 1px #ddd solid;
+      margin: 10px;
+      padding: 10px;
+    }
+    h2 { 
+      font-size: 16px;
+      margin: 0;
+      padding: 5px 0 0; }
+    ul { margin: 0; padding: 0; list-style: none;
+      li { 
+        position: relative;
+        p { font-size: 12px; }
+        div.latlng { 
+          display: none;
+          @include small-font; }
+        div.type { 
+          position: absolute;
+          top: .75em;
+          right: 0;
+          @include small-font; }
+        a { display: block; text-decoration: none; } margin: 0; padding: 0; border-bottom: 1px #ddd dotted; } }
+    font: {
+      family: "Helvetica", sans-serif; }
+    float: left;
+    //height: 385px;
+    width: 231px;
+    margin: 10px 0 0 10px;
+    border: 1px #ddd solid;
+    border-right: 0;
+    background: #fff; }
+
+  #checklist { 
+    margin: 10px 0 0 0;
+    @include panel_gradient;
+    border: 1px #ddd solid;
+    border-left: none;
+    border-right: none;
+    input.checkbox {
+      cursor: pointer; 
+      @include accessiblyHide; }
+    label.active {
+      font-weight: 600; }
+    label { 
+      @include panel_gradient;
+      margin: 0 10px; 
+      border: 1px #fff solid;
+      cursor: pointer;
+      box-shadow: 1px 1px 1px #999;
+      &:active,
+      &:focus { color: #926D00;
+        position: relative;
+        top: 1px;
+        left: 1px; }
+      padding: 5px 15px;
+      //background: #444;
+      color: #444;
+      display: inline-block;
+      *zoom: 1;
+      *display: inline; }
+    @include __fs__('Open Sans'); } }
