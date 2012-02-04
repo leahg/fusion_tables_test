@@ -237,7 +237,7 @@ padding-right: 10px;
 
 /* line 241, ../sass/teststyle.scss */
 #container #checklist label.active {
-  background: url(imgongold.png);
+  background: url(../img/imgongold.png);
   height: 30px;
   width: 173px;
   display: inline-block;
@@ -249,7 +249,7 @@ padding-right: 10px;
 #container #checklist label {
   cursor: pointer;
   color: gray;
-  background: url(imgoffsilver.png);
+  background: url(../img/imgoffsilver.png);
   height: 30px;
   width: 173px;
   display: inline-block;
