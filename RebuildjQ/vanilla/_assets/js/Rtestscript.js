@@ -124,9 +124,12 @@
 
   // == DEFAULT QUERY =================================== //
 
-  var queryText = encodeURIComponent("SELECT 'Title', 'Name', 'Lat', 'Description', 'Type' FROM " + Marker_TableID );
-  var query = new google.visualization.Query('http://www.google.com/fusiontables/gvizdata?tq=' + queryText);
+  var sidebar_queryText = encodeURIComponent("SELECT 'Title', 'Name', 'Lat', 'Description', 'Type' FROM " + Marker_TableID );
+  var sidebar_query = new google.visualization.Query('http://www.google.com/fusiontables/gvizdata?tq=' + sidebar_queryText);
 
+  // sidebar controls ui data hooks @data fusion tables
+
+  // type controls ui data hooks @data fusion tables
   var type_queryText = encodeURIComponent("SELECT 'Type' FROM " + Marker_TableID);
   var type_query = new google.visualization.Query('http://www.google.com/fusiontables/gvizdata?tq=' + type_queryText);
 
@@ -249,10 +252,27 @@
     if ( ! $this.attr('checked') ) {
       $this.next().removeClass('active');
       $sidebar.find('.'+type).parent().parent().addClass('hide');
+
+      $mapCanvas.gmap('findMarker', 'type', type, false, function(marker, found) {
+          if ( found ) {
+              marker.setVisible(false);
+          } else {
+              //marker.setVisible(false);
+          }
+      });
+
     } else {
       // the label
       $this.next().addClass('active');
       $sidebar.find('.'+type).parent().parent().removeClass('hide');
+
+      $mapCanvas.gmap('findMarker', 'type', type, false, function(marker, found) {
+          if ( found ) {
+              marker.setVisible(true);
+          } else {
+              //marker.setVisible(false);
+          }
+      });
     }
 
     $sidebar.find('.'+type).siblings().removeClass('active');
@@ -296,7 +316,17 @@
         // html info window content
         var htmlInfoWindowContent = "<h2 class='tooltip-header'>"+name+"</h2><p class='tooltip-desc'>"+desc+"</p>";
 
+        /*
+        $mapCanvas.gmap('loadFusion', { 
+          'query': { 
+            'from': Marker_TableID, 
+            'where': type 
+          } 
+        });
+        */
+
         // new marker
+        /*
         var new_marker = new google.maps.Marker({
           content: htmlInfoWindowContent,
           position: latLng,
@@ -305,29 +335,32 @@
 
         // add marker to global list
         gmarkers.push(new_marker);
+        */
+
+      //only allows single infowindow to open
+      if ( sidebarEnabled ) {
         
-        //only allows single infowindow to open
-        if ( sidebarEnabled ) {
-          
-          $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
+        $mapCanvas.gmap('addMarker', { 'type': type, 'position': pt, 'bounds': true } ).click(function(e) {
+          $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
+        });
+
+        // add a tool tip window instead of just activate
+        /*
+          $(new_marker).click(function(e) {
+            //iw.open(map, new_marker);
             $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
+            //$('.tooltip-header').trigger('load_scaffolding');
           });
-          // add a tool tip window instead of just activate
-            $(new_marker).click(function(e) {
-              //iw.open(map, new_marker);
-              $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
-              //$('.tooltip-header').trigger('load_scaffolding');
-            });
+        */
 
-        } else {
+      } else {
 
-          // activate a tool tip window instead of add
-          $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
-            $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
-          });
+        // activate a tool tip window instead of add
+        //$mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
+        //  $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
+        //});
 
-        }
-
+      }
 
       //});
 
@@ -346,8 +379,9 @@
     $this.find('#sidebar .mod-type-selector .inner a').live('click.loadInfoWindow', function(e) {
       e.preventDefault();
       var $this = $(this),
-          marker_id = parseInt($this.data("markerid")),
-          pt = $this.attr('rel');
+          marker_id = parseInt($this.data("markerid"), 10),
+          pt = $this.attr('rel'),
+          _class = $this.attr('class');
 
       $this.parent().parent().siblings().removeClass('active');
       $this.parent().parent().siblings().find('a.active').removeClass('active');
@@ -360,11 +394,12 @@
         if ( DEBUG ) {
           console.log(marker_id);
         }
-
-        google.maps.event.trigger(gmarkers[marker_id], 'click');
-
-        //$('.tooltip-header').trigger('load_scaffolding');
       }
+
+      //google.maps.event.trigger(gmarkers[marker_id], 'click');
+
+
+      //$('.tooltip-header').trigger('load_scaffolding');
       
     });
 
@@ -391,7 +426,7 @@
 
     info_window = new google.maps.InfoWindow();
 
-    query.send(getData);
+    sidebar_query.send(getData);
     type_query.send(typeControlsData);
 
   });
