@@ -288,13 +288,13 @@
     var _row_count = _tbl.getNumberOfRows();
     var _col_count = _tbl.getNumberOfColumns();
     var _col_label = _tbl.getColumnLabel(0);
-    var name, pt, desc, type;
+    var id, name, pt, desc, type;
     var htmlSidebarContent = [];
 
     htmlSidebarContent[0] = "<ul>";
 
     for (var i = 0; i < _row_count; i++) {
-      var id = i;
+      id = i;
       title = _tbl.getValue(i, 0);
       name = _tbl.getValue(i, 1);
       pt = _tbl.getValue(i, 2),
@@ -325,23 +325,41 @@
         });
         */
 
-        // new marker
-        /*
-        var new_marker = new google.maps.Marker({
-          content: htmlInfoWindowContent,
-          position: latLng,
-          map: map  
-        });
+      /*
+      // new marker
+      var new_marker = new google.maps.Marker({
+        content: htmlInfoWindowContent,
+        position: latLng,
+        map: map  
+      });
 
-        // add marker to global list
-        gmarkers.push(new_marker);
-        */
+      // add marker to global list
+      gmarkers.push(new_marker);
+      */
 
       //only allows single infowindow to open
       if ( sidebarEnabled ) {
         
-        $mapCanvas.gmap('addMarker', { 'type': type, 'position': pt, 'bounds': true } ).click(function(e) {
-          $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
+        $mapCanvas
+          .gmap('addMarker', { 
+            'type': type, 
+            'position': pt, 
+            'bounds': true,
+            'id': id,
+            'content': htmlInfoWindowContent
+          })
+          .click(function(e) {
+
+            var $a = $('a[data-markerid="' + this.id + '"]');
+
+            // select sidebar item
+            if ( DEBUG )
+              console.log( $a ); // click me!
+
+            $a.trigger('click.filterSidebar');
+
+            // show tool rip related content
+            //$mapCanvas.gmap('openInfoWindow', { 'content': this.content }, this);
         });
 
         // add a tool tip window instead of just activate
@@ -356,9 +374,9 @@
       } else {
 
         // activate a tool tip window instead of add
-        //$mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
-        //  $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
-        //});
+        $mapCanvas.gmap('addMarker', { 'position': pt, 'bounds': true } ).click(function(e) {
+          $mapCanvas.gmap('openInfoWindow', { 'content': htmlInfoWindowContent }, this);
+        });
 
       }
 
@@ -375,12 +393,30 @@
       mod
     */
 
+    $this.find('#sidebar .mod-type-selector .inner a').live('click.filterSidebar', function(e) {
+      e.preventDefault();
+
+      var $this = $(this),
+          $container = $this.closest('ul');
+
+      $container.data('active-marker', $this.data('markerid'));
+
+      //console.log( $container );
+      //console.log( $container.data('active-marker') );
+
+      $container.find('li').addClass('hide');
+      $container.find('a[data-markerid="'+$container.data('active-marker')+'"]').closest('li').addClass('active').removeClass('hide');
+
+    });
+
     //binds link in sidebar to infowindow
     $this.find('#sidebar .mod-type-selector .inner a').live('click.loadInfoWindow', function(e) {
       e.preventDefault();
       var $this = $(this),
           marker_id = parseInt($this.data("markerid"), 10),
           pt = $this.attr('rel'),
+          lat = pt.split(',')[0],
+          lng = pt.split(',')[1];
           _class = $this.attr('class');
 
       $this.parent().parent().siblings().removeClass('active');
@@ -390,14 +426,22 @@
         $this.addClass('active');
       }
 
+      /*
       if (gmarkers[marker_id]) {
         if ( DEBUG ) {
           console.log(marker_id);
         }
       }
+      */
 
       //google.maps.event.trigger(gmarkers[marker_id], 'click');
-
+      $mapCanvas.gmap('findMarker', 'id', marker_id, false, function(marker, found) {
+          if ( found ) {
+              marker.setVisible(true);
+          } else {
+              //marker.setVisible(false);
+          }
+      });
 
       //$('.tooltip-header').trigger('load_scaffolding');
       
